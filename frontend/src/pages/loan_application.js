@@ -5,7 +5,7 @@ import TestComponent from '../components/test';
 function LoanApplicationPage(props) {
     return (
         <div>
-            <TestComponent/>
+            {/* <TestComponent/> */}
             <LoanApplicationForm/>
             
         </div>

@@ -2,6 +2,8 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginForm = () => {
     const formik = useFormik({
@@ -17,14 +19,55 @@ const LoginForm = () => {
                 .required('Password is required')
                 .min(6, 'Password must be at least 6 characters'),
         }),
-        onSubmit: (values) => {
-            console.log('Form Submitted', values);
-            // Handle form submission, e.g., send values to an API
+        onSubmit: async (values) => {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(values),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Login failed');
+                }
+
+                const data = await response.json();
+                console.log('Login successful', data);
+
+                // Show success toast message
+                toast.success('Login successful!', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+                
+                // Here you can handle successful login, like redirecting the user
+
+            } catch (error) {
+                console.error('Error:', error);
+
+                // Show error toast message
+                toast.error(error.message || 'Login failed', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+            }
         },
     });
 
     return (
         <Container className="mt-4">
+            <ToastContainer />
             <Row className="justify-content-center">
                 <Col md={6}>
                     <Card className="shadow">
