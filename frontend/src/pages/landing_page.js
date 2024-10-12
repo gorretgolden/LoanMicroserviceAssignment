@@ -3,15 +3,41 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 
 const LandingPage = () => {
   return (
-    <Container fluid className="text-center" style={{ padding: '100px 0' }}>
-      <Row>
-        <Col>
-          <h1>Welcome to My Brand</h1>
-          <p>Your one-stop solution for all your needs</p>
-          <Button variant="primary" size="lg" href="#services">
-            Explore Services
-          </Button>
+    <Container fluid className="text-center" style={{ height: '100vh' }}>
+
+      <Row className="h-100 ">
+        <Col
+          style={{
+            backgroundImage: `url('https://img.freepik.com/free-photo/two-confident-serious-african-american-businessmen-focused-paperwork_273609-9317.jpg?uid=R166256386&ga=GA1.2.1084094240.1727827442&semt=ais_hybrid-rr-similar')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            position: 'relative',
+            color: '#fff',
+            padding: '50px',
+          }}
+        >
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            zIndex: 1,
+          }}></div>
+          <br />
+          <br />
+          <div style={{ position: 'relative', zIndex: 2 ,paddingTop:'20px'}}>
+            <h2 > In Need of a Quick Loan</h2>
+            <br/>
+            <h5>At LoansPlus we give out all types of loans. Apply today!</h5>
+            <br/>
+            <Button variant="success" size="lg px-14 py-2" href="loans/loan-application">
+              Apply for a loan
+            </Button>
+          </div>
         </Col>
+
       </Row>
     </Container>
   );
