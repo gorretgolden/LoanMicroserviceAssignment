@@ -15,7 +15,7 @@ const LandingPage = () => {
     if (!isLoggedIn) {
       navigate('/login');
     } else {
-      navigate('loans/loan-application');
+      navigate('loans/new-loan-application');
     }
   };
 

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Container, Form, Button, Card, Row, Col, Alert } from 'react-bootstrap';
+import { Container, Form, Button, Card, Row, Col, Toast, ToastContainer } from 'react-bootstrap';
 
 // Validation schema
 const validationSchema = Yup.object({
-    customer_id: Yup.string().required('Customer ID is required'),
     loan_amount: Yup.number()
         .required('Loan Amount is required')
         .positive('Loan Amount must be a positive number')
@@ -18,27 +17,57 @@ const validationSchema = Yup.object({
 });
 
 const LoanApplicationForm = () => {
-    const [responseMessage, setResponseMessage] = useState(null);
+    const [showSuccessToast, setShowSuccessToast] = useState(false);
+    const [showErrorToast, setShowErrorToast] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
 
     const formik = useFormik({
         initialValues: {
-            customer_id: '',
             loan_amount: '',
             repayment_period: '',
             loan_purpose: '',
         },
         validationSchema: validationSchema,
         onSubmit: async (values) => {
-            console.log('here')
+            // Getting the token from local storage or context
+            const token = localStorage.getItem('userToken');
+            if (!token) {
+                setErrorMessage('User not authenticated.');
+                setShowErrorToast(true);
+                return;
+            }
+
+            let userId;
             try {
-              
-                const response = await fetch('http://127.0.0.1:8000/loans/apply', {
+                // Extract the user ID from the token
+                userId = token.split('|')[0]; // Get the part before the pipe
+                if (!userId) {
+                    throw new Error('Invalid token structure');
+                }
+            } catch (error) {
+                setErrorMessage('Failed to extract user ID from token.');
+                setShowErrorToast(true);
+                console.error('Token extraction error:', error);
+                return;
+            }
+
+            // Prepare the request body
+            const requestBody = {
+                customer_id: userId,
+                loan_amount: values.loan_amount,
+                repayment_period: values.repayment_period,
+                loan_purpose: values.loan_purpose,
+            };
+            console.log(requestBody)
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/loans/apply', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
                     },
-                    body: JSON.stringify(values),
+                    body: JSON.stringify(requestBody),
                 });
 
                 if (!response.ok) {
@@ -46,12 +75,12 @@ const LoanApplicationForm = () => {
                 }
 
                 const data = await response.json();
-                setResponseMessage('Loan application submitted successfully!');
+                setShowSuccessToast(true); // Show success toast
                 setErrorMessage(null); // Clear any previous error
                 console.log('Success:', data);
             } catch (error) {
                 setErrorMessage('Failed to submit loan application.');
-                setResponseMessage(null); // Clear any previous success message
+                setShowErrorToast(true); // Show error toast
                 console.error('Error:', error);
             }
         },
@@ -73,12 +102,6 @@ const LoanApplicationForm = () => {
                         <Card.Body>
                             <h5 className="text-center">Loan Application Form</h5>
                             <Form onSubmit={(e) => formik.handleSubmit(e)} className="mt-4" style={{ maxWidth: '500px', margin: '0 auto' }}>
-
-                                {/* Success Message */}
-                                {responseMessage && <Alert variant="success">{responseMessage}</Alert>}
-                                {/* Error Message */}
-                                {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-
 
                                 <Form.Group controlId="formLoanAmount">
                                     <Form.Label>Loan Amount</Form.Label>
@@ -148,6 +171,16 @@ const LoanApplicationForm = () => {
                     </Card>
                 </Col>
             </Row>
+
+            {/* Toast container for messages */}
+            <ToastContainer position="top-end" className="p-3">
+                <Toast onClose={() => setShowSuccessToast(false)} show={showSuccessToast} delay={3000} autohide>
+                    <Toast.Body>Loan application submitted successfully!</Toast.Body>
+                </Toast>
+                <Toast onClose={() => setShowErrorToast(false)} show={showErrorToast} delay={3000} autohide>
+                    <Toast.Body>{errorMessage}</Toast.Body>
+                </Toast>
+            </ToastContainer>
         </Container>
     );
 };

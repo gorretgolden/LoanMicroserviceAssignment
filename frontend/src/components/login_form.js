@@ -6,11 +6,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
-
 const LoginForm = () => {
-
-    const [responseMessage, setResponseMessage] = useState(null);
-    const [errorMessage, setErrorMessage] = useState(null);
+    const [userToken, setUserToken] = useState(null);
+    const [userDetails, setUserDetails] = useState(null);
     const navigate = useNavigate(); // for navigation
     const formik = useFormik({
         initialValues: {
@@ -52,16 +50,21 @@ const LoginForm = () => {
                     pauseOnHover: true,
                     draggable: true,
                 });
-             
-            
-                // Storing  the user token
-                localStorage.setItem('userToken', data.token);
-                console.log('testing info', data.token)
-                setErrorMessage(null); 
-                console.log(localStorage.getItem('userToken'));
 
-                navigate('/loans/loan-application');
+                // Storing the user token
+                const token = data[0].token; // Extracting the token from the response
+                console.log('User Token:', token);
+                localStorage.setItem('userToken', token); // Storing token in local storage
+                setUserToken(token); // Setting the token state
 
+                // Storing user details
+                setUserDetails(data[0]); // Setting user details state
+
+                // // Clear previous error message
+                // setErrorMessage(null);
+
+                // Navigate to the loan application page
+                navigate('/loans/new-loan-application');
 
             } catch (error) {
                 console.error('Error:', error);
@@ -130,6 +133,23 @@ const LoginForm = () => {
                             <div className="text-center mt-3">
                                 <small>Don't have an account? <a href="/register">Register here</a></small>
                             </div>
+
+                            {/* Displaying Token and User Details */}
+                            {userToken && (
+                                <div className="mt-3">
+                                    <h5>Your Token:</h5>
+                                    <p>{userToken}</p> {/* Display the token value */}
+                                </div>
+                            )}
+                            {userDetails && (
+                                <div className="mt-3">
+                                    <h5>User Details:</h5>
+                                    <p><strong>ID:</strong> {userDetails.id}</p>
+                                    <p><strong>Name:</strong> {userDetails.name}</p>
+                                    <p><strong>Email:</strong> {userDetails.email}</p>
+                                    <p><strong>Type:</strong> {userDetails.type}</p>
+                                </div>
+                            )}
                         </Card.Body>
                     </Card>
                 </Col>
