@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+
 
 const LoginForm = () => {
+
+    const [responseMessage, setResponseMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const navigate = useNavigate(); // for navigation
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -46,8 +52,16 @@ const LoginForm = () => {
                     pauseOnHover: true,
                     draggable: true,
                 });
-                
-                // Here you can handle successful login, like redirecting the user
+             
+            
+                // Storing  the user token
+                localStorage.setItem('userToken', data.token);
+                console.log('testing info', data.token)
+                setErrorMessage(null); 
+                console.log(localStorage.getItem('userToken'));
+
+                navigate('/loans/loan-application');
+
 
             } catch (error) {
                 console.error('Error:', error);
@@ -112,7 +126,7 @@ const LoginForm = () => {
                                     Login
                                 </Button>
                             </Form>
-                            
+
                             <div className="text-center mt-3">
                                 <small>Don't have an account? <a href="/register">Register here</a></small>
                             </div>

@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('userToken'); // Replace with your token key
+    setIsLoggedIn(!!token); // Check if token exists
+  }, []);
+
+  const handleApplyClick = () => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    } else {
+      navigate('loans/loan-application');
+    }
+  };
+
   return (
     <Container fluid className="text-center" style={{ height: '100vh' }}>
-
       <Row className="h-100 ">
         <Col
           style={{
@@ -27,17 +43,16 @@ const LandingPage = () => {
           }}></div>
           <br />
           <br />
-          <div style={{ position: 'relative', zIndex: 2 ,paddingTop:'20px'}}>
-            <h2 > In Need of a Quick Loan</h2>
-            <br/>
+          <div style={{ position: 'relative', zIndex: 2, paddingTop: '20px' }}>
+            <h2>In Need of a Quick Loan</h2>
+            <br />
             <h5>At LoansPlus we give out all types of loans. Apply today!</h5>
-            <br/>
-            <Button variant="success" size="lg px-14 py-2" href="loans/loan-application">
+            <br />
+            <Button variant="success" size="lg" onClick={handleApplyClick}>
               Apply for a loan
             </Button>
           </div>
         </Col>
-
       </Row>
     </Container>
   );
