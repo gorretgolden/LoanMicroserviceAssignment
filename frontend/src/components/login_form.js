@@ -7,9 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-    const [userToken, setUserToken] = useState(null);
-    const [userDetails, setUserDetails] = useState(null);
     const navigate = useNavigate(); // for navigation
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -39,33 +38,34 @@ const LoginForm = () => {
                 }
 
                 const data = await response.json();
-                console.log('Login successful', data);
 
-                // Show success toast message
-                toast.success('Login successful!', {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                });
+                // Check if the response is in the expected format
+                if (Array.isArray(data) && data.length === 2) {
+                    const userData = data[0]; // Get user data
+                    const successMessage = data[1]; // Get success message
 
-                // Storing the user token
-                const token = data[0].token; // Extracting the token from the response
-                console.log('User Token:', token);
-                localStorage.setItem('userToken', token); // Storing token in local storage
-                setUserToken(token); // Setting the token state
+                    // Show success toast message
+                    toast.success(successMessage, {
+                        position: "top-center",
+                        autoClose: 3000, // Show for 3 seconds
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                    });
 
-                // Storing user details
-                setUserDetails(data[0]); // Setting user details state
+                    // Store user token and information
+                    localStorage.setItem('userToken', userData.token);
+                    localStorage.setItem('userId', userData.id); // Store user ID if needed
+                    localStorage.setItem('userName', userData.name); // Store user name if needed
 
-                // // Clear previous error message
-                // setErrorMessage(null);
-
-                // Navigate to the loan application page
-                navigate('/loans/new-loan-application');
-
+                    // Delay navigation to allow the toast to be shown
+                    setTimeout(() => {
+                        navigate('/loans/new-loan-application');
+                    }, 3000); // Delay navigation for 3 seconds
+                } else {
+                    throw new Error('Unexpected response structure');
+                }
             } catch (error) {
                 console.error('Error:', error);
 
@@ -133,23 +133,6 @@ const LoginForm = () => {
                             <div className="text-center mt-3">
                                 <small>Don't have an account? <a href="/register">Register here</a></small>
                             </div>
-
-                            {/* Displaying Token and User Details */}
-                            {userToken && (
-                                <div className="mt-3">
-                                    <h5>Your Token:</h5>
-                                    <p>{userToken}</p> {/* Display the token value */}
-                                </div>
-                            )}
-                            {userDetails && (
-                                <div className="mt-3">
-                                    <h5>User Details:</h5>
-                                    <p><strong>ID:</strong> {userDetails.id}</p>
-                                    <p><strong>Name:</strong> {userDetails.name}</p>
-                                    <p><strong>Email:</strong> {userDetails.email}</p>
-                                    <p><strong>Type:</strong> {userDetails.type}</p>
-                                </div>
-                            )}
                         </Card.Body>
                     </Card>
                 </Col>

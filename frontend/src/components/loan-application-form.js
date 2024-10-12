@@ -58,7 +58,7 @@ const LoanApplicationForm = () => {
                 repayment_period: values.repayment_period,
                 loan_purpose: values.loan_purpose,
             };
-            console.log(requestBody)
+            console.log(requestBody);
 
             try {
                 const response = await fetch('http://127.0.0.1:8000/api/loans/apply', {

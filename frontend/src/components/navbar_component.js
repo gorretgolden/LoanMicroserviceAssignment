@@ -16,7 +16,9 @@ const NavbarComponent = () => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('userToken'); // Clear the token
+    localStorage.removeItem('userToken'); 
+    localStorage.removeItem('userId'); 
+    localStorage.removeItem('userName'); 
     setIsLoggedIn(false);
     navigate('/'); // Redirect to home or landing page
   };
