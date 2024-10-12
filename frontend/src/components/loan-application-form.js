@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
 const customToastStyle = {
-    width: '600px', 
+    width: '800px', 
     margin: '0 auto', 
 }
 // Validation schema
