@@ -5,7 +5,7 @@ function RegisterPage(props) {
     return (
         <div>
             {/* Navbar at the top */}
-            <NavbarComponent/>
+            {/* <NavbarComponent/> */}
 
             
         </div>

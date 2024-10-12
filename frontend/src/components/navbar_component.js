@@ -25,7 +25,7 @@ const NavbarComponent = () => {
           <Nav.Link as={Link} to="/services" className="text-white px-4">Loan Applications</Nav.Link>
           {/* <Nav.Link as={Link} to="/about" className="text-white px-4">Login</Nav.Link> */}
           {/* <Button as={Link} to="/apply" variant="info" className="ms-2 px-4">Login</Button> */}
-          <Button as={Link} to="/apply" variant="light" className="ms-2 ml-4 text-success">Login</Button>
+          <Button as={Link} to="/login" variant="light" className="ms-2 ml-4 text-success">Login</Button>
         </Nav>
       </Navbar.Collapse>
     </Container>
