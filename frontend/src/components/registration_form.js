@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Container, Form, Button, Card, Row, Col, InputGroup } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import 'react-toastify/dist/ReactToastify.css';
 
 const RegistrationForm = () => {
+    const navigate = useNavigate();
+    
+    // State to toggle password visibility
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -33,7 +40,8 @@ const RegistrationForm = () => {
         onSubmit: async (values) => {
             let cookies = document.cookie.split("=");
             let token = cookies[1];
-            console.log('heree', token)
+            console.log('heree', token);
+
             try {
                 const response = await fetch('http://127.0.0.1:8000/api/auth/register', {
                     method: 'POST',
@@ -53,26 +61,31 @@ const RegistrationForm = () => {
                     }),
                 });
 
-                if (!response.ok) {
-                    throw new Error('Failed to register');
-                }
-
                 const data = await response.json();
-                console.log('Registration successful', data);
 
-                // Show success toast message
-                toast.success('Registration successful!', {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                });
+                if (!response.ok || data.success === false) {
+                    toast.error(data.message || 'Registration failed', {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                    });
+                } else {
+                    toast.success('Registration successful! Redirecting to login...', {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                    });
+
+                    setTimeout(() => navigate('/login'), 2000);
+                }
             } catch (error) {
                 console.error('Error:', error);
-
-                // Show error toast message
                 toast.error('Registration failed', {
                     position: "top-right",
                     autoClose: 5000,
@@ -151,7 +164,6 @@ const RegistrationForm = () => {
                                         <option value="">Select Gender</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
-
                                     </Form.Select>
                                     <Form.Control.Feedback type="invalid">
                                         {formik.errors.gender}
@@ -160,38 +172,53 @@ const RegistrationForm = () => {
 
                                 <Form.Group controlId="formPassword" className="mt-3">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        name="password"
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={formik.values.password}
-                                        isInvalid={formik.touched.password && formik.errors.password}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        {formik.errors.password}
-                                    </Form.Control.Feedback>
+                                    <InputGroup>
+                                        <Form.Control
+                                            type={showPassword ? 'text' : 'password'}
+                                            name="password"
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={formik.values.password}
+                                            isInvalid={formik.touched.password && formik.errors.password}
+                                        />
+                                        <Button
+                                            variant="outline-secondary"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                        >
+                                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                        </Button>
+                                        <Form.Control.Feedback type="invalid">
+                                            {formik.errors.password}
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
                                 </Form.Group>
 
                                 <Form.Group controlId="formConfirmPassword" className="mt-3">
                                     <Form.Label>Confirm Password</Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        name="confirmPassword"
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={formik.values.confirmPassword}
-                                        isInvalid={formik.touched.confirmPassword && formik.errors.confirmPassword}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        {formik.errors.confirmPassword}
-                                    </Form.Control.Feedback>
+                                    <InputGroup>
+                                        <Form.Control
+                                            type={showConfirmPassword ? 'text' : 'password'}
+                                            name="confirmPassword"
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={formik.values.confirmPassword}
+                                            isInvalid={formik.touched.confirmPassword && formik.errors.confirmPassword}
+                                        />
+                                        <Button
+                                            variant="outline-secondary"
+                                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                        >
+                                            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                                        </Button>
+                                        <Form.Control.Feedback type="invalid">
+                                            {formik.errors.confirmPassword}
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
                                 </Form.Group>
 
                                 <Button variant="primary" type="submit" className="mt-3" block>
                                     Register
                                 </Button>
-
                             </Form>
                             <p className="mt-3 text-center">
                                 Already have an account? <Link to="/login">Login here</Link>

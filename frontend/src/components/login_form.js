@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-    const navigate = useNavigate(); // for navigation
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: {
@@ -39,30 +39,28 @@ const LoginForm = () => {
 
                 const data = await response.json();
 
-                // Check if the response is in the expected format
-                if (Array.isArray(data) && data.length === 2) {
-                    const userData = data[0]; // Get user data
-                    const successMessage = data[1]; // Get success message
+                // Check if the login was successful
+                if (data.success) {
+                    const userData = data.data; // Access the nested data
 
-                    // Show success toast message
-                    toast.success(successMessage, {
+                    toast.success(data.message, {
                         position: "top-center",
-                        autoClose: 3000, // Show for 3 seconds
+                        autoClose: 3000,
                         hideProgressBar: false,
                         closeOnClick: true,
                         pauseOnHover: true,
                         draggable: true,
                     });
 
-                    // Store user token and information
+                    // Store user token and other details in localStorage
                     localStorage.setItem('userToken', userData.token);
-                    localStorage.setItem('userId', userData.id); // Store user ID if needed
-                    localStorage.setItem('userName', userData.name); // Store user name if needed
+                    localStorage.setItem('userId', userData.id);
+                    localStorage.setItem('userName', userData.name);
 
                     // Delay navigation to allow the toast to be shown
                     setTimeout(() => {
                         navigate('/loans/new-loan-application');
-                    }, 3000); // Delay navigation for 3 seconds
+                    }, 3000); // Delay for 3 seconds
                 } else {
                     throw new Error('Unexpected response structure');
                 }
@@ -87,13 +85,13 @@ const LoginForm = () => {
             <ToastContainer />
             <Row className="justify-content-center">
                 <Col md={6}>
-                    <Card className="shadow">
+                    <Card className="shadow p-4">
                         <Card.Body>
-                            <h5 className="text-center mb-4">Login</h5>
+                            <h4 className="mb-4 text-center">Login</h4>
                             <Form onSubmit={formik.handleSubmit}>
                                 {/* Email Field */}
                                 <Form.Group controlId="formEmail">
-                                    <Form.Label className="text-left">Email</Form.Label>
+                                    <Form.Label>Email</Form.Label>
                                     <Form.Control
                                         type="email"
                                         name="email"
@@ -111,7 +109,7 @@ const LoginForm = () => {
 
                                 {/* Password Field */}
                                 <Form.Group controlId="formPassword">
-                                    <Form.Label className="text-left">Password</Form.Label>
+                                    <Form.Label>Password</Form.Label>
                                     <Form.Control
                                         type="password"
                                         name="password"
@@ -125,7 +123,7 @@ const LoginForm = () => {
                                     </Form.Control.Feedback>
                                 </Form.Group>
 
-                                <Button variant="primary" type="submit" className="mt-3" block>
+                                <Button variant="primary" type="submit" className="mt-4 w-100">
                                     Login
                                 </Button>
                             </Form>
