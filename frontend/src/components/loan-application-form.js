@@ -7,8 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
 const customToastStyle = {
-    width: '800px', 
-    margin: '0 auto', 
+    width: '800px',
+    margin: '0 auto',
 }
 // Validation schema
 const validationSchema = Yup.object({
@@ -182,7 +182,16 @@ const LoanApplicationForm = () => {
                                         <option value="Business Loan">Business Loan</option>
                                         <option value="Auto Loan">Auto Loan</option>
                                         <option value="Medical Loan">Medical Expenses</option>
-                                        <option value="Insurance Loan">Medical Expenses</option>
+                                        <option value="Vacation Loan">Vacation Expenses</option>
+                                        <option value="Debt Consolidation">Debt Consolidation</option>
+                                        <option value="Wedding Loan">Wedding Expenses</option>
+                                        <option value="Travel Loan">Travel Expenses</option>
+                                        <option value="Equipment Financing">Equipment Financing</option>
+                                        <option value="Home Purchase">Home Purchase</option>
+                                        <option value="Rent Payment">Rent Payment</option>
+                                        <option value="Emergency Fund">Emergency Fund</option>
+                                        <option value="Refinancing">Refinancing Existing Loans</option>
+
                                     </Form.Select>
                                     <Form.Control.Feedback type="invalid">
                                         {formik.errors.loan_purpose}

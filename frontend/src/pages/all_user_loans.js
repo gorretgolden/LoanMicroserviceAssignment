@@ -52,12 +52,12 @@ const formatDate = (dateString) => {
                             <Row>
                                 <Col ms={12}>
                                     {/* User Avatar */}
-                                    <div className=" mb-3">
+                                    <div className=" mb-3 d-flex justify-content-center">
                                         <img
                                             src={DEFAULT_AVATAR_URL}
                                             alt="User Avatar"
 
-                                            className="rounded-circle"
+                                            className="rounded-circle "
                                             style={{ width: '60px', height: '60px' }} // Avatar size
                                         />
                                     </div>
