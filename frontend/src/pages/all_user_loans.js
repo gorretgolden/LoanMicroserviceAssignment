@@ -11,7 +11,7 @@ const CustomerLoansPage = () => {
     const customerId = localStorage.getItem('userId');
     const userToken = localStorage.getItem('userToken');
     const [lastLoan, setLastLoan] = useState(null);
-    const [loading, setLoading] = useState(true); // State for loading
+    const [loading, setLoading] = useState(true); 
     const [userDetails, setUserDetails] = useState({
         name: localStorage.getItem('userName'),
         email: localStorage.getItem('userEmail'),
@@ -34,7 +34,7 @@ const CustomerLoansPage = () => {
                     setLoading(false); // Set loading to false after fetching
                 }
             } else {
-                setLoading(false); // Set loading to false if no customer ID or token
+                setLoading(false); 
             }
         };
 

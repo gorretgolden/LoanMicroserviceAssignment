@@ -20,7 +20,7 @@ const NavbarComponent = () => {
     localStorage.removeItem('userId'); 
     localStorage.removeItem('userName'); 
     setIsLoggedIn(false);
-    navigate('/'); // Redirect to home or landing page
+    navigate('/'); // Redirecting the user to  the  landing page on logout
   };
 
   return (

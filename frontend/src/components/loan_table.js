@@ -36,7 +36,9 @@ const LoanTable = ({ customerId, userToken }) => {
     return (
         <div className="d-flex justify-content-center mt-8">
             <Table striped bordered hover className="w-76 text-center">
-                {loans.length > 0 && !loading && ( // Only render the header if there are loans and not loading
+                {loans.length > 0 && !loading && ( 
+                    // Only rendering the table header if there are loan applications and 
+                    //not loading state
                     <thead>
                         <tr>
                             <th>ID</th>

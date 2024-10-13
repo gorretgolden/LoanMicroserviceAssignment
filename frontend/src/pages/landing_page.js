@@ -7,8 +7,8 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('userToken'); // Replace with your token key
-    setIsLoggedIn(!!token); // Check if token exists
+    const token = localStorage.getItem('userToken'); 
+    setIsLoggedIn(!!token); // Checking if token exists
   }, []);
 
   const handleApplyClick = () => {

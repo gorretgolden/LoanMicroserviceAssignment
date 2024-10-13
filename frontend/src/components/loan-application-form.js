@@ -27,7 +27,7 @@ const validationSchema = Yup.object({
 
 const LoanApplicationForm = () => {
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false); // State for loading spinner
+    const [loading, setLoading] = useState(false); 
 
     const formik = useFormik({
         initialValues: {

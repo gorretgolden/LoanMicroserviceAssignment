@@ -20,7 +20,7 @@ function LoanApplicationDetails() {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                // Setting the loan details 
+                // Setting the loan details after the response
                 setLoan(response.data);
                 console.log('check data',response.data)
                 setLoading(false);

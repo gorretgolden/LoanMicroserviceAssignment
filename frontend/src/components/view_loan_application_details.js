@@ -1,5 +1,5 @@
 import React, {useState } from 'react';
-import { Card, Badge, Row, Col } from 'react-bootstrap';
+import { Card, Row, Col } from 'react-bootstrap';
 import customerAvatar from '../assets/images/customer-avatar.png'
 
 

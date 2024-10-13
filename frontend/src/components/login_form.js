@@ -10,8 +10,7 @@ import { baseUri } from '../constants/constants';
 
 const LoginForm = () => {
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false); // state for loader
-
+    const [loading, setLoading] = useState(false); 
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -44,9 +43,9 @@ const LoginForm = () => {
 
                 const data = await response.json();
 
-                // Check if the login was successful
+                // Checking if the login was successful
                 if (data.success) {
-                    const userData = data.data; // Access the nested data
+                    const userData = data.data; // Obtaining the nested respone
 
                     toast.success(data.message, {
                         position: "top-center",
@@ -57,7 +56,8 @@ const LoginForm = () => {
                         draggable: true,
                     });
 
-                    // Storing the customer details in the localStorage  //for now (am not using customer details endpoint)
+                    // Storing the customer details in the localStorage 
+                     //for now (am not using customer details endpoint)
                     localStorage.setItem('userToken', userData.token);
                     localStorage.setItem('userId', userData.id);
                     localStorage.setItem('userName', userData.name);
@@ -67,14 +67,14 @@ const LoginForm = () => {
                     // Delay navigation to allow the toast to be shown
                     setTimeout(() => {
                         navigate('/loans/new-loan-application');
-                    }, 3000); // Delay for 3 seconds
+                    }, 3000); // Delaying for 3 seconds
                 } else {
-                    throw new Error('Unexpected response structure');
+                    throw new Error('Unexpected response');
                 }
             } catch (error) {
                 console.error('Error:', error);
 
-                // Show error toast message
+                // Showing the error toast message
                 toast.error(error.message || 'Login failed', {
                     position: "top-right",
                     autoClose: 5000,
