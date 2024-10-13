@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
+import { Container, Form, Button, Card, Row, Col, Spinner } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +10,8 @@ import { baseUri } from '../constants/constants';
 const customToastStyle = {
     width: '800px',
     margin: '0 auto',
-}
+};
+
 // Validation schema
 const validationSchema = Yup.object({
     loan_amount: Yup.number()
@@ -26,6 +27,7 @@ const validationSchema = Yup.object({
 
 const LoanApplicationForm = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false); // State for loading spinner
 
     const formik = useFormik({
         initialValues: {
@@ -59,6 +61,8 @@ const LoanApplicationForm = () => {
                 loan_purpose: values.loan_purpose,
             };
 
+            setLoading(true); // Start loading
+
             try {
                 const response = await fetch(`${baseUri}/loans/apply`, {
                     method: 'POST',
@@ -73,11 +77,9 @@ const LoanApplicationForm = () => {
                 const responseData = await response.json();
 
                 if (!response.ok) {
-                    // Check for specific error messages
                     throw new Error(responseData.message || 'Network response was not ok');
                 }
 
-                // Checking if the submission was successful
                 if (responseData.success) {
                     toast.success(responseData.message, {
                         position: "top-center",
@@ -88,10 +90,9 @@ const LoanApplicationForm = () => {
                         draggable: true,
                     });
 
-                    // Delay navigation to allow the toast to be shown
                     setTimeout(() => {
                         navigate('/loans/new-loan-application');
-                    }, 3000); // Delaying the navigation for 3 seconds
+                    }, 3000);
                 } else {
                     throw new Error('Unexpected response structure');
                 }
@@ -99,7 +100,6 @@ const LoanApplicationForm = () => {
             } catch (error) {
                 console.error('Error:', error);
 
-                // Show error toast message
                 toast.error(
                     error.message || 'Loan application failed, try again later', {
                     position: "top-center",
@@ -108,8 +108,9 @@ const LoanApplicationForm = () => {
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
-                    
                 });
+            } finally {
+                setLoading(false); // Stop loading
             }
         },
     });
@@ -126,7 +127,7 @@ const LoanApplicationForm = () => {
                         src='https://img.freepik.com/free-vector/bank-loan-concept-illustration_114360-17863.jpg?uid=R166256386&ga=GA1.1.1084094240.1727827442&semt=ais_hybrid'
                     />
                 </Col>
-                <Col >
+                <Col>
                     <Card style={{ width: '30rem' }} className="shadow">
                         <Card.Body>
                             <h5 className="text-center mt-3">Loan Application Form</h5>
@@ -150,79 +151,83 @@ const LoanApplicationForm = () => {
                                             {formik.errors.loan_amount}
                                         </Form.Control.Feedback>
                                     </Form.Group>
-
                                 </div>
                                 <br />
 
-                        <div className='text-left'>
-                        <Form.Group controlId="formRepaymentPeriod">
-                                    <Form.Label>Repayment Period (in months)</Form.Label>
-                                    <Form.Control
-                                        type="number"
-                                        min="1"
-                                        max='20'
-                                        name="repayment_period"
-                                        placeholder='Enter the repayment period'
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={formik.values.repayment_period}
-                                        isInvalid={formik.touched.repayment_period && formik.errors.repayment_period}
-                                        style={{ width: '100%', textAlign: 'left' }}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        {formik.errors.repayment_period}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
-
-                        </div>
+                                <div className='text-left'>
+                                    <Form.Group controlId="formRepaymentPeriod">
+                                        <Form.Label>Repayment Period (in months)</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            min="1"
+                                            max='20'
+                                            name="repayment_period"
+                                            placeholder='Enter the repayment period'
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={formik.values.repayment_period}
+                                            isInvalid={formik.touched.repayment_period && formik.errors.repayment_period}
+                                            style={{ width: '100%', textAlign: 'left' }}
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            {formik.errors.repayment_period}
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
+                                </div>
                                 <br />
 
-                         <div className='text-left'>
-                         <Form.Group controlId="formLoanPurpose">
-                                    <Form.Label>Loan Purpose</Form.Label>
-                                    <Form.Select
-                                        name="loan_purpose"
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={formik.values.loan_purpose}
-                                        isInvalid={formik.touched.loan_purpose && formik.errors.loan_purpose}
-                                        style={{ width: '100%', textAlign: 'left' }}
-                                    >
-                                        <option value="">Select Loan Purpose</option>
-                                        <option value="Personal Loan">Personal Loan</option>
-                                        <option value="Education Loan">Education Loan</option>
-                                        <option value="Home Improvement">Home Improvement</option>
-                                        <option value="Business Loan">Business Loan</option>
-                                        <option value="Auto Loan">Auto Loan</option>
-                                        <option value="Medical Loan">Medical Expenses</option>
-                                        <option value="Vacation Loan">Vacation Expenses</option>
-                                        <option value="Debt Consolidation">Debt Consolidation</option>
-                                        <option value="Wedding Loan">Wedding Expenses</option>
-                                        <option value="Travel Loan">Travel Expenses</option>
-                                        <option value="Equipment Financing">Equipment Financing</option>
-                                        <option value="Home Purchase">Home Purchase</option>
-                                        <option value="Rent Payment">Rent Payment</option>
-                                        <option value="Emergency Fund">Emergency Fund</option>
-                                        <option value="Refinancing">Refinancing Existing Loans</option>
-
-                                    </Form.Select>
-                                    <Form.Control.Feedback type="invalid">
-                                        {formik.errors.loan_purpose}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
-
-                         </div>
+                                <div className='text-left'>
+                                    <Form.Group controlId="formLoanPurpose">
+                                        <Form.Label>Loan Purpose</Form.Label>
+                                        <Form.Select
+                                            name="loan_purpose"
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={formik.values.loan_purpose}
+                                            isInvalid={formik.touched.loan_purpose && formik.errors.loan_purpose}
+                                            style={{ width: '100%', textAlign: 'left' }}
+                                        >
+                                            <option value="">Select Loan Purpose</option>
+                                            <option value="Personal Loan">Personal Loan</option>
+                                            <option value="Education Loan">Education Loan</option>
+                                            <option value="Home Improvement">Home Improvement</option>
+                                            <option value="Business Loan">Business Loan</option>
+                                            <option value="Auto Loan">Auto Loan</option>
+                                            <option value="Medical Loan">Medical Expenses</option>
+                                            <option value="Vacation Loan">Vacation Expenses</option>
+                                            <option value="Debt Consolidation">Debt Consolidation</option>
+                                            <option value="Wedding Loan">Wedding Expenses</option>
+                                            <option value="Travel Loan">Travel Expenses</option>
+                                            <option value="Equipment Financing">Equipment Financing</option>
+                                            <option value="Home Purchase">Home Purchase</option>
+                                            <option value="Rent Payment">Rent Payment</option>
+                                            <option value="Emergency Fund">Emergency Fund</option>
+                                            <option value="Refinancing">Refinancing Existing Loans</option>
+                                        </Form.Select>
+                                        <Form.Control.Feedback type="invalid">
+                                            {formik.errors.loan_purpose}
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
+                                </div>
 
                                 <Row className='mt-3 mb-3'>
                                     <Col>
-                                        <Button variant="success" type="submit" className="w-100 mt-3">Apply</Button>
+                                        <Button variant="success" type="submit" className="w-100 mt-3" disabled={loading}>
+                                            {loading ? (
+                                                <>
+                                                    <Spinner animation="border" size="sm" />
+                                                    <span className="ms-2">Loading...</span>
+                                                </>
+                                            ) : (
+                                                'Apply'
+                                            )}
+                                        </Button>
                                     </Col>
                                     <Col>
                                         <Button variant="secondary" className="w-100 mt-3" onClick={() => navigate('/')}>
                                             Cancel
                                         </Button>
                                     </Col>
-
                                 </Row>
                             </Form>
                         </Card.Body>

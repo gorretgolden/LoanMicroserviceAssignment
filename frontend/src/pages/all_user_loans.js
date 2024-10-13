@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import LoanTable from '../components/loan_table';
-import { Card, Badge, Row, Col, Button } from 'react-bootstrap';
+import { Card, Badge, Row, Col, Button, Spinner } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaEdit } from 'react-icons/fa';
-import customerAvatar from '../assets/images/customer-avatar.png'
-
-
+import customerAvatar from '../assets/images/customer-avatar.png';
 
 const CustomerLoansPage = () => {
     const navigate = useNavigate();
     const customerId = localStorage.getItem('userId');
     const userToken = localStorage.getItem('userToken');
     const [lastLoan, setLastLoan] = useState(null);
-
+    const [loading, setLoading] = useState(true); // State for loading
     const [userDetails, setUserDetails] = useState({
         name: localStorage.getItem('userName'),
         email: localStorage.getItem('userEmail'),
         contact: localStorage.getItem('userContact')
     });
-
 
     useEffect(() => {
         const fetchLastLoan = async () => {
@@ -29,10 +26,15 @@ const CustomerLoansPage = () => {
                         headers: { Authorization: `Bearer ${userToken}` }
                     });
                     const loanData = response.data['all-loan-applications'];
+                    console.log(loanData)
                     setLastLoan(loanData.length > 0 ? loanData[0] : null);
                 } catch (error) {
                     console.error('Error fetching last loan:', error);
+                } finally {
+                    setLoading(false); // Set loading to false after fetching
                 }
+            } else {
+                setLoading(false); // Set loading to false if no customer ID or token
             }
         };
 
@@ -53,7 +55,7 @@ const CustomerLoansPage = () => {
                 </Col>
                 <Col xs={12} md={3}>
                     <Card className="mb-3 shadow-sm " style={{ backgroundColor: '#E5F7E2FF' }}>
-                        <Card.Header className="last-loan-card-header "> <h5>Active Loan Application</h5></Card.Header>
+                        <Card.Header className="last-loan-card-header"> Active Loan Application</Card.Header>
                         <Card.Body>
                             <Row>
                                 <Col ms={12}>
@@ -82,11 +84,15 @@ const CustomerLoansPage = () => {
                                         <strong>Contact:</strong> {userDetails.contact}<br />
                                     </div>
                                 </div>
-
                             </div>
                             <hr />
                             {/* Current Loan Details Section*/}
-                            {lastLoan ? (
+                            {loading ? ( 
+                                <div className="text-center py-4">
+                                    <Spinner animation="border" variant="success" />
+                                    <p>Loading loan application details...</p>
+                                </div>
+                            ) : lastLoan ? (
                                 <div className="text-left">
                                     <Row>
                                         <Col>
@@ -94,19 +100,12 @@ const CustomerLoansPage = () => {
                                         </Col>
                                         <Col>
                                             <div className="text-right">
-                                                <Button variant="link" >
-                                                    <FaEdit className='text-warning' onClick={() => {
-                                                        navigate(`/edit-loan-application/${lastLoan.id}`);
-
-                                                    }} />
+                                                <Button variant="link">
+                                                    <FaEdit className='text-warning' onClick={handleEditLoan} />
                                                 </Button>
                                             </div>
-
                                         </Col>
-
                                     </Row>
-
-
                                     <div className='py-2'>
                                         <strong>Loan ID:</strong> LN.{lastLoan.id}<br />
                                     </div>
@@ -132,7 +131,6 @@ const CustomerLoansPage = () => {
                                     <div className='py-2'>
                                         <strong>Applied Date:</strong> {lastLoan.created_at}<br />
                                     </div>
-
                                 </div>
                             ) : (
                                 <Card className="text-center">
@@ -148,14 +146,14 @@ const CustomerLoansPage = () => {
                     </Card>
                 </Col>
                 <Col xs={12} md={8}>
-                 <Card>
-                    <Card.Header>   <h5 >Loan Application History</h5></Card.Header>
-                 </Card>
+                    <Card>
+                        <Card.Header><h5>Loan Application History</h5></Card.Header>
+                    </Card>
                     <div>
                         {customerId ? (
                             <LoanTable customerId={customerId} userToken={userToken} />
                         ) : (
-                            <p>Please log in to view your loans.</p>
+                            <p>Please log in to view your loan applications.</p>
                         )}
                     </div>
                 </Col>

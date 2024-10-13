@@ -1,7 +1,7 @@
-import React from 'react';
+import {React, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
+import { Container, Form, Button, Card, Row, Col,Spinner } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { baseUri } from '../constants/constants';
 
 const LoginForm = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false); // state for loader
 
     const formik = useFormik({
         initialValues: {
@@ -25,6 +26,8 @@ const LoginForm = () => {
                 .min(6, 'Password must be at least 6 characters'),
         }),
         onSubmit: async (values) => {
+            setLoading(true); //Updating the loading state to true
+            
             try {
                 const response = await fetch(`${baseUri}/auth/login`, {
                     method: 'POST',
@@ -80,6 +83,10 @@ const LoginForm = () => {
                     pauseOnHover: true,
                     draggable: true,
                 });
+            }finally{
+
+                 //Updating the loading state to false after the request
+                setLoading(false);
             }
         },
     });
@@ -134,7 +141,14 @@ const LoginForm = () => {
 
                         </div>
                                 <Button variant="success" type="submit" className="mt-4 w-100">
-                                    Login
+                                {loading ? (
+                                        <>
+                                            <Spinner animation="border" size="sm" /> 
+                                            <span className="ms-2">Logging In...</span>
+                                        </>
+                                    ) : (
+                                        'Login'
+                                    )}
                                 </Button>
                             </Form>
 

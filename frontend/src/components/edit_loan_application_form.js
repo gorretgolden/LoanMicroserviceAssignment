@@ -8,6 +8,7 @@ import { Formik } from 'formik';
 import 'react-toastify/dist/ReactToastify.css';
 import { baseUri } from '../constants/constants';
 
+
 const EditLoanApplicationForm = ({ userToken }) => {
     const { loanId } = useParams();
     const navigate = useNavigate();
@@ -48,6 +49,8 @@ const EditLoanApplicationForm = ({ userToken }) => {
     });
 
     const handleSubmit = async (values, { setSubmitting }) => {
+        const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
         try {
             const response = await axios.put(`${baseUri}/loans/${loanId}`, values, {
                 headers: { Authorization: `Bearer ${userToken}` }
