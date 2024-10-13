@@ -5,8 +5,7 @@ import RegistrationForm from '../components/registration_form';
 function RegisterPage(props) {
     return (
         <div>
-            {/* Navbar at the top */}
-            {/* <NavbarComponent/> */}
+           
 <RegistrationForm/>
             
         </div>

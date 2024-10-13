@@ -10,7 +10,7 @@ import { baseUri } from '../constants/constants';
 
 const RegistrationForm = () => {
     const navigate = useNavigate();
-    
+
     // State to toggle password visibility
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -108,127 +108,143 @@ const RegistrationForm = () => {
                         <Card.Body>
                             <h5 className="text-center mb-4">Create a new Account</h5>
                             <Form onSubmit={formik.handleSubmit}>
-                                <Form.Group controlId="formName">
-                                    <Form.Label>Name</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="name"
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={formik.values.name}
-                                        isInvalid={formik.touched.name && formik.errors.name}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        {formik.errors.name}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
+                            <div className='text-left'>
+                          
+                                    <Form.Group controlId="formName">
+                                        <Form.Label>Name</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="name"
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={formik.values.name}
+                                            isInvalid={formik.touched.name && formik.errors.name}
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            {formik.errors.name}
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
 
-                                <Form.Group controlId="formEmail" className="mt-3">
-                                    <Form.Label>Email</Form.Label>
-                                    <Form.Control
-                                        type="email"
-                                        name="email"
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={formik.values.email}
-                                        isInvalid={formik.touched.email && formik.errors.email}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        {formik.errors.email}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
+                            </div>
 
-                                <Form.Group controlId="formContact" className="mt-3">
-                                    <Form.Label>Contact</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="contact"
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={formik.values.contact}
-                                        isInvalid={formik.touched.contact && formik.errors.contact}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        {formik.errors.contact}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
+                    <div className='text-left'>
+                    <Form.Group controlId="formEmail" className="mt-3">
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control
+                                    type="email"
+                                    name="email"
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={formik.values.email}
+                                    isInvalid={formik.touched.email && formik.errors.email}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {formik.errors.email}
+                                </Form.Control.Feedback>
+                            </Form.Group>
 
-                                <Form.Group controlId="formGender" className="mt-3">
-                                    <Form.Label>Gender</Form.Label>
-                                    <Form.Select
-                                        name="gender"
+                    </div>
+
+                <div className='text-left'>
+                <Form.Group controlId="formContact" className="mt-3">
+                                <Form.Label>Contact</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="contact"
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={formik.values.contact}
+                                    isInvalid={formik.touched.contact && formik.errors.contact}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {formik.errors.contact}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                </div>
+<div className='text-left'>
+
+<Form.Group controlId="formGender" className="mt-3">
+                                <Form.Label>Gender</Form.Label>
+                                <Form.Select
+                                    name="gender"
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={formik.values.gender}
+                                    isInvalid={formik.touched.gender && formik.errors.gender}
+                                >
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </Form.Select>
+                                <Form.Control.Feedback type="invalid">
+                                    {formik.errors.gender}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+</div>
+
+              <div className='text-left'>
+              <Form.Group controlId="formPassword" className="mt-3">
+                                <Form.Label>Password</Form.Label>
+                                <InputGroup>
+                                    <Form.Control
+                                        type={showPassword ? 'text' : 'password'}
+                                        name="password"
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
-                                        value={formik.values.gender}
-                                        isInvalid={formik.touched.gender && formik.errors.gender}
+                                        value={formik.values.password}
+                                        isInvalid={formik.touched.password && formik.errors.password}
+                                    />
+                                    <Button
+                                        variant="outline-secondary"
+                                        onClick={() => setShowPassword(!showPassword)}
                                     >
-                                        <option value="">Select Gender</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                    </Form.Select>
+                                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                    </Button>
                                     <Form.Control.Feedback type="invalid">
-                                        {formik.errors.gender}
+                                        {formik.errors.password}
                                     </Form.Control.Feedback>
-                                </Form.Group>
+                                </InputGroup>
+                            </Form.Group>
+              </div>
 
-                                <Form.Group controlId="formPassword" className="mt-3">
-                                    <Form.Label>Password</Form.Label>
-                                    <InputGroup>
-                                        <Form.Control
-                                            type={showPassword ? 'text' : 'password'}
-                                            name="password"
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
-                                            value={formik.values.password}
-                                            isInvalid={formik.touched.password && formik.errors.password}
-                                        />
-                                        <Button
-                                            variant="outline-secondary"
-                                            onClick={() => setShowPassword(!showPassword)}
-                                        >
-                                            {showPassword ? <FaEyeSlash /> : <FaEye />}
-                                        </Button>
-                                        <Form.Control.Feedback type="invalid">
-                                            {formik.errors.password}
-                                        </Form.Control.Feedback>
-                                    </InputGroup>
-                                </Form.Group>
+                        <div className='text-left'>
+                        <Form.Group controlId="formConfirmPassword" className="mt-3">
+                                <Form.Label>Confirm Password</Form.Label>
+                                <InputGroup>
+                                    <Form.Control
+                                        type={showConfirmPassword ? 'text' : 'password'}
+                                        name="confirmPassword"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.confirmPassword}
+                                        isInvalid={formik.touched.confirmPassword && formik.errors.confirmPassword}
+                                    />
+                                    <Button
+                                        variant="outline-secondary"
+                                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                    >
+                                        {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                                    </Button>
+                                    <Form.Control.Feedback type="invalid">
+                                        {formik.errors.confirmPassword}
+                                    </Form.Control.Feedback>
+                                </InputGroup>
+                            </Form.Group>
 
-                                <Form.Group controlId="formConfirmPassword" className="mt-3">
-                                    <Form.Label>Confirm Password</Form.Label>
-                                    <InputGroup>
-                                        <Form.Control
-                                            type={showConfirmPassword ? 'text' : 'password'}
-                                            name="confirmPassword"
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
-                                            value={formik.values.confirmPassword}
-                                            isInvalid={formik.touched.confirmPassword && formik.errors.confirmPassword}
-                                        />
-                                        <Button
-                                            variant="outline-secondary"
-                                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                        >
-                                            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-                                        </Button>
-                                        <Form.Control.Feedback type="invalid">
-                                            {formik.errors.confirmPassword}
-                                        </Form.Control.Feedback>
-                                    </InputGroup>
-                                </Form.Group>
+                        </div>
 
-                                <Button variant="primary" type="submit" className="mt-3" block>
-                                    Register
-                                </Button>
-                            </Form>
-                            <p className="mt-3 text-center">
-                                Already have an account? <Link to="/login">Login here</Link>
-                            </p>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-        </Container>
+                            <Button variant="success" type="submit" className="mt-4 w-100" block>
+                                Register
+                            </Button>
+                        </Form>
+                        <p className="mt-3 text-center">
+                            Already have an account? <Link to="/login" className='text-decoration-none text-success'>Login here</Link>
+                        </p>
+                    </Card.Body>
+                </Card>
+            </Col>
+        </Row>
+        </Container >
     );
 };
 
