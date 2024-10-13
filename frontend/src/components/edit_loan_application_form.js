@@ -22,7 +22,16 @@ const EditLoanApplicationForm = ({ userToken }) => {
                 const response = await axios.get(`http://127.0.0.1:8000/api/loans/${loanId}`, {
                     headers: { Authorization: `Bearer ${userToken}` }
                 });
-                setInitialValues(response.data['loan-application']); // Set loan details from response
+                //updating state of initial values
+                const loanData = response.data; 
+              //  console.log('Check here',loanData.loanAmount)
+                setInitialValues({
+                    loan_amount: loanData.loanAmount,
+                    repayment_period: loanData.repaymentPeriod,
+                    loan_purpose: loanData.loanPurpose
+                });
+                console.log(initialValues,'initial')
+                console.log('Loan data fetched successfully:', loanData);
             } catch (error) {
                 console.error('Error fetching loan details:', error);
                 toast.error('Failed to fetch loan details.');
@@ -63,75 +72,76 @@ const EditLoanApplicationForm = ({ userToken }) => {
                         initialValues={initialValues}
                         validationSchema={validationSchema}
                         onSubmit={handleSubmit}
+                        enableReinitialize 
                     >
                         {({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
                             <Form onSubmit={handleSubmit}>
-                              <div className='py-3'>
-                              <Form.Group controlId="formLoanAmount">
-                                    <Form.Label className='text-left'>Loan Amount</Form.Label>
-                                    <Form.Control
-                                        type="number"
-                                        name="loan_amount"
-                                        value={values.loan_amount}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        isInvalid={touched.loan_amount && !!errors.loan_amount}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        {errors.loan_amount}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
-                              </div>
+                                <div className='py-3'>
+                                    <Form.Group controlId="formLoanAmount">
+                                        <Form.Label className='text-left'>Loan Amount</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            name="loan_amount"
+                                            value={values.loan_amount}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            isInvalid={touched.loan_amount && !!errors.loan_amount}
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            {errors.loan_amount}
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
+                                </div>
 
-                             <div className='py-3'>
-                             <Form.Group controlId="formRepaymentPeriod">
-                                    <Form.Label>Repayment Period (months)</Form.Label>
-                                    <Form.Control
-                                        type="number"
-                                        name="repayment_period"
-                                        value={values.repayment_period}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        isInvalid={touched.repayment_period && !!errors.repayment_period}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        {errors.repayment_period}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
-                             </div>
+                                <div className='py-3'>
+                                    <Form.Group controlId="formRepaymentPeriod">
+                                        <Form.Label>Repayment Period (months)</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            name="repayment_period"
+                                            value={values.repayment_period}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            isInvalid={touched.repayment_period && !!errors.repayment_period}
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            {errors.repayment_period}
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
+                                </div>
 
-                          <div className='py-3'>
-                          <Form.Group controlId="formLoanPurpose">
-                                    <Form.Label>Loan Purpose</Form.Label>
-                                    <Form.Select
-                                        name="loan_purpose"
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        value={values.loan_purpose}
-                                        isInvalid={touched.loan_purpose && !!errors.loan_purpose}
-                                    >
-                                        <option value="">Select Loan Purpose</option>
-                                        <option value="Personal Loan">Personal Loan</option>
-                                        <option value="Education Loan">Education Loan</option>
-                                        <option value="Home Improvement">Home Improvement</option>
-                                        <option value="Business Loan">Business Loan</option>
-                                        <option value="Auto Loan">Auto Loan</option>
-                                        <option value="Medical Loan">Medical Expenses</option>
-                                        <option value="Vacation Loan">Vacation Expenses</option>
-                                        <option value="Debt Consolidation">Debt Consolidation</option>
-                                        <option value="Wedding Loan">Wedding Expenses</option>
-                                        <option value="Travel Loan">Travel Expenses</option>
-                                        <option value="Equipment Financing">Equipment Financing</option>
-                                        <option value="Home Purchase">Home Purchase</option>
-                                        <option value="Rent Payment">Rent Payment</option>
-                                        <option value="Emergency Fund">Emergency Fund</option>
-                                        <option value="Refinancing">Refinancing Existing Loans</option>
-                                    </Form.Select>
-                                    <Form.Control.Feedback type="invalid">
-                                        {errors.loan_purpose}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
-                          </div>
+                                <div className='py-3'>
+                                    <Form.Group controlId="formLoanPurpose">
+                                        <Form.Label>Loan Purpose</Form.Label>
+                                        <Form.Select
+                                            name="loan_purpose"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.loan_purpose}
+                                            isInvalid={touched.loan_purpose && !!errors.loan_purpose}
+                                        >
+                                            <option value="">Select Loan Purpose</option>
+                                            <option value="Personal Loan">Personal Loan</option>
+                                            <option value="Education Loan">Education Loan</option>
+                                            <option value="Home Improvement">Home Improvement</option>
+                                            <option value="Business Loan">Business Loan</option>
+                                            <option value="Auto Loan">Auto Loan</option>
+                                            <option value="Medical Loan">Medical Expenses</option>
+                                            <option value="Vacation Loan">Vacation Expenses</option>
+                                            <option value="Debt Consolidation">Debt Consolidation</option>
+                                            <option value="Wedding Loan">Wedding Expenses</option>
+                                            <option value="Travel Loan">Travel Expenses</option>
+                                            <option value="Equipment Financing">Equipment Financing</option>
+                                            <option value="Home Purchase">Home Purchase</option>
+                                            <option value="Rent Payment">Rent Payment</option>
+                                            <option value="Emergency Fund">Emergency Fund</option>
+                                            <option value="Refinancing">Refinancing Existing Loans</option>
+                                        </Form.Select>
+                                        <Form.Control.Feedback type="invalid">
+                                            {errors.loan_purpose}
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
+                                </div>
 
                                 <Button variant="success" type="submit" className="w-100 mt-3">Update Loan</Button>
                             </Form>
@@ -139,7 +149,7 @@ const EditLoanApplicationForm = ({ userToken }) => {
                     </Formik>
                 </Card.Body>
             </Card>
-            <ToastContainer /> {/* Add ToastContainer to render the toast messages */}
+            <ToastContainer />
         </div>
     );
 };
