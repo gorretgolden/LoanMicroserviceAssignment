@@ -6,6 +6,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import 'react-toastify/dist/ReactToastify.css';
+import { baseUri } from '../constants/constants';
 
 const EditLoanApplicationForm = ({ userToken }) => {
     const { loanId } = useParams();
@@ -20,7 +21,7 @@ const EditLoanApplicationForm = ({ userToken }) => {
     useEffect(() => {
         const fetchLoanDetails = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/loans/${loanId}`, {
+                const response = await axios.get(`${baseUri}/loans/${loanId}`, {
                     headers: { Authorization: `Bearer ${userToken}` }
                 });
                 const loanData = response.data;
@@ -48,7 +49,7 @@ const EditLoanApplicationForm = ({ userToken }) => {
 
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
-            const response = await axios.put(`http://127.0.0.1:8000/api/loans/${loanId}`, values, {
+            const response = await axios.put(`${baseUri}/loans/${loanId}`, values, {
                 headers: { Authorization: `Bearer ${userToken}` }
             });
             

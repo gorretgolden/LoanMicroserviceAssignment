@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import 'react-toastify/dist/ReactToastify.css';
+import { baseUri } from '../constants/constants';
 
 const RegistrationForm = () => {
     const navigate = useNavigate();
@@ -43,7 +44,7 @@ const RegistrationForm = () => {
             console.log('heree', token);
 
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/auth/register', {
+                const response = await fetch(`${baseUri}/auth/register`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

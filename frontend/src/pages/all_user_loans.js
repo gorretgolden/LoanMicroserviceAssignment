@@ -77,7 +77,7 @@ const CustomerLoansPage = () => {
                             <div>
                                 {/* Customer Details Section */}
                                 <div className=" mb-2 py-2 text-left">
-                                    <h6>Client Details</h6>
+                                    <h6>Applicant Details</h6>
                                     <div className="text-left">
                                         <strong>Name:</strong> {userDetails.name}<br />
                                     </div>

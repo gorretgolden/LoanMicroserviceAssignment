@@ -5,6 +5,7 @@ import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { baseUri } from '../constants/constants';
 
 const customToastStyle = {
     width: '800px',
@@ -59,7 +60,7 @@ const LoanApplicationForm = () => {
             };
 
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/loans/apply', {
+                const response = await fetch(`${baseUri}/loans/apply`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

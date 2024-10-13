@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/images/logo.png';
+import { baseUri } from '../constants/constants';
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -25,7 +26,7 @@ const LoginForm = () => {
         }),
         onSubmit: async (values) => {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/auth/login', {
+                const response = await fetch(`${baseUri}/auth/login`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

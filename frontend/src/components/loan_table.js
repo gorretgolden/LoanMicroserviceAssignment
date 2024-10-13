@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Card, Button, Badge } from 'react-bootstrap';
 import axios from 'axios';
-import { FaEdit, FaEye } from 'react-icons/fa';
+import { FaEdit } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { baseUri } from '../constants/constants';
 
 
 const LoanTable = ({ customerId, userToken }) => {
@@ -12,7 +13,7 @@ const LoanTable = ({ customerId, userToken }) => {
     useEffect(() => {
         const fetchLoans = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/loans/customer/${customerId}`, {
+                const response = await axios.get(`${baseUri}/loans/customer/${customerId}`, {
                     headers: {
                         Authorization: `Bearer ${userToken}`,
                     },
@@ -91,9 +92,9 @@ const LoanTable = ({ customerId, userToken }) => {
     }
 
     function viewLoanStatus(loanId) {
-        // Logic to view the loan status, e.g., showing a modal with loan details
-        console.log('View Loan Status ID:', loanId);
-        // Show loan status details if needed
+        navigate(`/loan-application/${loanId}/details`);
+        console.log('Loan ID:', loanId);
+       
     }
 };
 
