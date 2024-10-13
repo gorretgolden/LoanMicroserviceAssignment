@@ -20,12 +20,6 @@ const CustomerLoansPage = () => {
         contact: localStorage.getItem('userContact')
     });
 
-    // Function to format the date
-    const formatDate = (dateString) => {
-        const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-        const date = new Date(dateString);
-        return date.toLocaleDateString('en-GB', options);
-    };
 
     useEffect(() => {
         const fetchLastLoan = async () => {
@@ -117,7 +111,7 @@ const CustomerLoansPage = () => {
                                         <strong>Loan ID:</strong> LN.{lastLoan.id}<br />
                                     </div>
                                     <div className='py-2'>
-                                        <strong>Loan Amount:</strong> UGX {lastLoan.loan_amount}<br />
+                                        <strong>Loan Amount:</strong> UGX {lastLoan.loan_amount.toLocaleString()}<br />
                                     </div>
                                     <div className='py-2'>
                                         <strong>Repayment Period:</strong> {lastLoan.repayment_period} months<br />
@@ -136,7 +130,7 @@ const CustomerLoansPage = () => {
                                         </Badge><br />
                                     </div>
                                     <div className='py-2'>
-                                        <strong>Applied Date:</strong> {formatDate(lastLoan.created_at)}<br />
+                                        <strong>Applied Date:</strong> {lastLoan.created_at}<br />
                                     </div>
 
                                 </div>

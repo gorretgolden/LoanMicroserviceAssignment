@@ -21,7 +21,7 @@ const LoanTable = ({ customerId, userToken }) => {
 
                 const loanData = response.data;
                 setLoans(loanData['all-loan-applications']);
-                console.log(loanData)
+                console.log('testing', loanData)
             } catch (error) {
                 console.error('Error fetching loans:', error);
             }
@@ -48,7 +48,7 @@ const LoanTable = ({ customerId, userToken }) => {
                         {loans.map((loan) => (
                             <tr key={loan.id}>
                                 <td>LN.{loan.id}</td>
-                                <td>UGX {loan.loan_amount}</td>
+                                <td>UGX {loan.loan_amount.toLocaleString()}</td>
                                 <td>{loan.repayment_period} months</td>
                                 <td>{loan.loan_purpose}</td>
                                 <td> <Badge pill variant={

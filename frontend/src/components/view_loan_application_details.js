@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import LoanTable from '../components/loan_table';
-import { Card, Badge, Row, Col, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { FaEdit } from 'react-icons/fa';
+import React, {useState } from 'react';
+import { Card, Badge, Row, Col } from 'react-bootstrap';
 import customerAvatar from '../assets/images/customer-avatar.png'
 
-// In LoanApplicationDetailsCard.js
 
 function LoanApplicationDetailsCard({ loan }) {
-    const navigate = useNavigate();
+   
+    const [userDetails, setUserDetails] = useState({
+        name: localStorage.getItem('userName'),
+        email: localStorage.getItem('userEmail'),
+        contact: localStorage.getItem('userContact')
+    });
 
     return (
-        <Card className="mb-3 shadow-sm" style={{ backgroundColor: '#E5F7E2FF' }}>
+        <Card className="mb-3 shadow px-4">
             <Card.Header className="last-loan-card-header">
-                <h5>Active Loan Application</h5>
+                <h5>Loan Application Details</h5>
             </Card.Header>
             <Card.Body>
                 <Row>
@@ -30,20 +30,21 @@ function LoanApplicationDetailsCard({ loan }) {
                     </Col>
                 </Row>
                 <div className="mb-2 py-2 text-left">
-                    <h6>Applicant Details</h6>
-                    <strong>Name:</strong> {loan.user_name}<br />
-                    <strong>Email:</strong> {loan.user_email}<br />
-                    <strong>Contact:</strong> {loan.user_contact}<br />
+                    <h6 className='text-success'>Applicant Details</h6>
+                    <strong>Name:</strong> {userDetails.name}<br />
+                    <strong>Email:</strong> {userDetails.email}<br />
+                    <strong>Contact:</strong> {userDetails.contact}<br />
                 </div>
                 <hr />
                 <div className="text-left">
-                    <h6>Loan Details</h6>
-                    <p><strong>Loan ID:</strong> LN.{loan.id}</p>
-                    <p><strong>Loan Amount:</strong> UGX {loan.loan_amount}</p>
-                    <p><strong>Repayment Period:</strong> {loan.repayment_period} months</p>
-                    <p><strong>Loan Purpose:</strong> {loan.loan_purpose}</p>
+                    <h6  className='text-success'>Loan Application Details</h6>
+                    <p><strong>Loan Application Number:</strong> LN.{loan.loanId}</p>
+                    <p><strong>Loan Amount:</strong> UGX {loan.loanAmount.toLocaleString()}</p>
+                    <p><strong>Repayment Period:</strong> {loan.repaymentPeriod} months</p>
+                    <p><strong>Loan Purpose:</strong> {loan.loanPurpose}</p>
                     <p><strong>Status:</strong> {loan.status}</p>
-                    <p><strong>Applied Date:</strong> {loan.applied_date}</p>
+                    <p><strong>Applied Date:</strong> {loan.createdAt}</p>
+                    <p><strong>Updated Date:</strong> {loan.updatedAt}</p>
                 </div>
             </Card.Body>
         </Card>
