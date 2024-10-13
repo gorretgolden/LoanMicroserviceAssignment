@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Table, Card, Button, Badge } from 'react-bootstrap';
 import axios from 'axios';
 import { FaEdit, FaEye } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+
 
 const LoanTable = ({ customerId, userToken }) => {
     const [loans, setLoans] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchLoans = async () => {
@@ -81,9 +84,10 @@ const LoanTable = ({ customerId, userToken }) => {
     );
 
     function editLoan(loanId) {
-        // Logic to edit the loan, e.g., redirecting to an edit form
+      
+        navigate(`/edit-loan-application/${loanId}`);
         console.log('Edit Loan ID:', loanId);
-        // Navigate to the edit form if needed
+        // Navigating to the edit page
     }
 
     function viewLoanStatus(loanId) {

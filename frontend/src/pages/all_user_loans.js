@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import LoanTable from '../components/loan_table';
-import { Card, Badge, Row, Col, Container } from 'react-bootstrap';
+import { Card, Badge, Row, Col, Container, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import '../assets/css/customer_loans_page.css';
 import axios from 'axios';
+import { FaEdit, FaEye } from 'react-icons/fa';
 
 // Sample avatar URL - you can replace this with your actual default avatar image
 const DEFAULT_AVATAR_URL = 'https://via.placeholder.com/150';
 
 const CustomerLoansPage = () => {
-
-
+    const navigate = useNavigate(); // Initialize the navigate function
     const customerId = localStorage.getItem('userId');
     const userToken = localStorage.getItem('userToken');
     const [lastLoan, setLastLoan] = useState(null);
@@ -19,11 +20,12 @@ const CustomerLoansPage = () => {
     });
 
     // Function to format the date
-const formatDate = (dateString) => {
-    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-GB', options); // 'en-GB' gives format DD-MM-YYYY
-};
+    const formatDate = (dateString) => {
+        const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-GB', options); // 'en-GB' gives format DD-MM-YYYY
+    };
+
     useEffect(() => {
         const fetchLastLoan = async () => {
             if (customerId && userToken) {
@@ -42,8 +44,15 @@ const formatDate = (dateString) => {
         fetchLastLoan();
     }, [customerId, userToken]);
 
+    // Function to handle edit button click
+    const handleEditLoan = () => {
+        if (lastLoan) {
+            navigate(`/edit-loan/${lastLoan.id}`); // Navigate to the edit page with loan ID
+        }
+    };
+
     return (
-        <div className='py-20 px-8'  style={{ backgroundColor: '#F5F5F5' }}>
+        <div className='py-20 px-8' style={{ backgroundColor: '#F5F5F5' }}>
             <Row className="mb-4">
                 <Col xs={12} md={3}>
                     <Card className="mb-4 last-loan-card w-300">
@@ -56,37 +65,50 @@ const formatDate = (dateString) => {
                                         <img
                                             src={DEFAULT_AVATAR_URL}
                                             alt="User Avatar"
-
-                                            className="rounded-circle "
+                                            className="rounded-circle"
                                             style={{ width: '60px', height: '60px' }} // Avatar size
                                         />
                                     </div>
                                 </Col>
-                               
                             </Row>
                             <div>
-                                    {/* User Details */}
-                                    <div className=" mb-2 py-2" >
-                                        <h6>Client Details</h6>
-                                        <div>
-                                            <strong>Name:</strong> {userDetails.name}<br />
-                                        </div>
-                                        <div className=" mb-2 py-2">
-                                            <strong>Email:</strong> {userDetails.email}<br />
-                                        </div>
-                                    </div></div>
+                                {/* User Details */}
+                                <div className=" mb-2 py-2 text-left">
+                                    <h6>Client Details</h6>
+                                    <div className="text-left">
+                                        <strong>Name:</strong> {userDetails.name}<br />
+                                    </div>
+                                    <div className=" mb-2 py-2">
+                                        <strong>Email:</strong> {userDetails.email}<br />
+                                    </div>
+                                </div>
+
+                            </div>
                             <hr />
-
-
                             {/* Last Loan Details */}
                             {lastLoan ? (
                                 <div className="text-left">
-                                    <h6>LOAN DETAILS</h6>
+                                    <Row>
+                                        <Col>
+                                            <h6>LOAN DETAILS</h6>
+                                        </Col>
+                                        <Col>
+                                            <div className="text-right">
+                                                <Button variant="link" >
+                                                    <FaEdit /> 
+                                                </Button>
+                                            </div>
+
+                                        </Col>
+
+                                    </Row>
+
+
                                     <div className='py-2'>
                                         <strong>Loan ID:</strong> LN.{lastLoan.id}<br />
                                     </div>
                                     <div className='py-2'>
-                                        <strong>Loan Amount:</strong>UGX {lastLoan.loan_amount}<br />
+                                        <strong>Loan Amount:</strong> UGX {lastLoan.loan_amount}<br />
                                     </div>
                                     <div className='py-2'>
                                         <strong>Repayment Period:</strong> {lastLoan.repayment_period} months<br />
@@ -103,11 +125,11 @@ const formatDate = (dateString) => {
                                         }>
                                             {lastLoan.status}
                                         </Badge><br />
-                                    </div >
-
+                                    </div>
                                     <div className='py-2'>
                                         <strong>Applied Date:</strong> {formatDate(lastLoan.created_at)}<br />
                                     </div>
+
                                 </div>
                             ) : (
                                 <Card className="text-center">

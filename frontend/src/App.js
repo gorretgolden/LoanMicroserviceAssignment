@@ -7,8 +7,10 @@ import RegisterPage from './pages/register_page';
 import LoginPage from './pages/login_page';
 import LoanApplicationPage from './pages/loan_application';
 import AllUserLoans from './pages/all_user_loans';
-
+import EditLoanApplicationPage from './pages/edit_loan_page';
+import { userToken } from './constants/constants'; 
 function App() {
+
   return (
     <Router>
       <NavbarComponent/>
@@ -20,6 +22,7 @@ function App() {
           <Route path="/loans/new-loan-application" element={<LoanApplicationPage/>} />
           <Route path="customer/loan-applications" element={<AllUserLoans/>} />
           <Route path='customer/loans' element={<AllUserLoans/>}/>
+          <Route path="/edit-loan-application/:loanId" element={<EditLoanApplicationPage userToken={userToken} />} />
 
     
         </Routes>
