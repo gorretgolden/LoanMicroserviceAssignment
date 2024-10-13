@@ -123,10 +123,11 @@ const LoanApplicationForm = () => {
                         src='https://img.freepik.com/free-vector/bank-loan-concept-illustration_114360-17863.jpg?uid=R166256386&ga=GA1.1.1084094240.1727827442&semt=ais_hybrid'
                     />
                 </Col>
-                <Col>
+                <Col >
                     <Card style={{ width: '30rem' }} className="shadow">
                         <Card.Body>
-                            <h5 className="text-center">Loan Application Form</h5>
+                            <h5 className="text-center mt-3">Loan Application Form</h5>
+                            <hr/>
                             <Form onSubmit={formik.handleSubmit} className="mt-4" style={{ maxWidth: '500px', margin: '0 auto' }}>
                                 <Form.Group controlId="formLoanAmount">
                                     <Form.Label>Loan Amount</Form.Label>
@@ -198,9 +199,17 @@ const LoanApplicationForm = () => {
                                     </Form.Control.Feedback>
                                 </Form.Group>
 
-                                <Button variant="primary" type="submit" className="mt-3">
-                                    Submit
-                                </Button>
+                                <Row className='mt-3 mb-3'>
+                                    <Col>
+                                        <Button variant="success" type="submit" className="w-100 mt-3">Apply</Button>
+                                    </Col>
+                                    <Col>
+                                        <Button variant="secondary" className="w-100 mt-3" onClick={() => navigate('/')}>
+                                            Cancel
+                                        </Button>
+                                    </Col>
+
+                                </Row>
                             </Form>
                         </Card.Body>
                     </Card>

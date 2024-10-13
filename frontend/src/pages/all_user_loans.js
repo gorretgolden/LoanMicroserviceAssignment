@@ -1,29 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import LoanTable from '../components/loan_table';
-import { Card, Badge, Row, Col, Container, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import '../assets/css/customer_loans_page.css';
+import { Card, Badge, Row, Col, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
-import { FaEdit, FaEye } from 'react-icons/fa';
+import { FaEdit } from 'react-icons/fa';
+import { DEFAULT_CUSTOMER_URL } from '../constants/constants';
 
-// Sample avatar URL - you can replace this with your actual default avatar image
-const DEFAULT_AVATAR_URL = 'https://via.placeholder.com/150';
+
+
 
 const CustomerLoansPage = () => {
-    const navigate = useNavigate(); // Initialize the navigate function
+    const navigate = useNavigate(); 
     const customerId = localStorage.getItem('userId');
     const userToken = localStorage.getItem('userToken');
     const [lastLoan, setLastLoan] = useState(null);
+
     const [userDetails, setUserDetails] = useState({
-        name: localStorage.getItem('userName') || 'Default User',
-        email: localStorage.getItem('userEmail') || 'default@example.com',
+        name: localStorage.getItem('userName'),
+        email: localStorage.getItem('userEmail'),
+        contact: localStorage.getItem('userContact')
     });
 
     // Function to format the date
     const formatDate = (dateString) => {
         const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
         const date = new Date(dateString);
-        return date.toLocaleDateString('en-GB', options); // 'en-GB' gives format DD-MM-YYYY
+        return date.toLocaleDateString('en-GB', options); 
     };
 
     useEffect(() => {
@@ -47,7 +49,7 @@ const CustomerLoansPage = () => {
     // Function to handle edit button click
     const handleEditLoan = () => {
         if (lastLoan) {
-            navigate(`/edit-loan/${lastLoan.id}`); // Navigate to the edit page with loan ID
+            navigate(`/edit-loan/${lastLoan.id}`); 
         }
     };
 
@@ -55,24 +57,24 @@ const CustomerLoansPage = () => {
         <div className='py-20 px-8' style={{ backgroundColor: '#F5F5F5' }}>
             <Row className="mb-4">
                 <Col xs={12} md={3}>
-                    <Card className="mb-4 last-loan-card w-300">
-                        <Card.Header className="last-loan-card-header"> Active Loan Application</Card.Header>
+                    <Card className="mb-4 last-loan-card w-300 shadow">
+                        <Card.Header className="last-loan-card-header"> <h5>Active Loan Application</h5></Card.Header>
                         <Card.Body>
                             <Row>
                                 <Col ms={12}>
-                                    {/* User Avatar */}
+                                    {/* Customer image */}
                                     <div className=" mb-3 d-flex justify-content-center">
                                         <img
-                                            src={DEFAULT_AVATAR_URL}
+                                            src={DEFAULT_CUSTOMER_URL}
                                             alt="User Avatar"
                                             className="rounded-circle"
-                                            style={{ width: '60px', height: '60px' }} // Avatar size
+                                            style={{ width: '60px', height: '60px' }} 
                                         />
                                     </div>
                                 </Col>
                             </Row>
                             <div>
-                                {/* User Details */}
+                                {/* Customer Details Section */}
                                 <div className=" mb-2 py-2 text-left">
                                     <h6>Client Details</h6>
                                     <div className="text-left">
@@ -81,11 +83,14 @@ const CustomerLoansPage = () => {
                                     <div className=" mb-2 py-2">
                                         <strong>Email:</strong> {userDetails.email}<br />
                                     </div>
+                                    <div className=" mb-2 py-2">
+                                        <strong>Contact:</strong> {userDetails.contact}<br />
+                                    </div>
                                 </div>
 
                             </div>
                             <hr />
-                            {/* Last Loan Details */}
+                            {/* Current Loan Details Section*/}
                             {lastLoan ? (
                                 <div className="text-left">
                                     <Row>

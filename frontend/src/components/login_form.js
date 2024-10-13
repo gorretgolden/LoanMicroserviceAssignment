@@ -5,6 +5,7 @@ import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/images/logo.png';
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -52,10 +53,12 @@ const LoginForm = () => {
                         draggable: true,
                     });
 
-                    // Store user token and other details in localStorage
+                    // Storing the customer details in the localStorage  //for now (am not using customer details endpoint)
                     localStorage.setItem('userToken', userData.token);
                     localStorage.setItem('userId', userData.id);
                     localStorage.setItem('userName', userData.name);
+                    localStorage.setItem('userEmail', userData.email);
+                    localStorage.setItem('userContact', userData.contact);
 
                     // Delay navigation to allow the toast to be shown
                     setTimeout(() => {
@@ -87,10 +90,12 @@ const LoginForm = () => {
                 <Col md={6}>
                     <Card className="shadow p-4">
                         <Card.Body>
-                            <h4 className="mb-4 text-center">Login</h4>
+                        <img src={logo} alt="Logo" width="50" height="50" className="d-inline-block align-top" />
+                            <h4 className="mb-4 text-center mt-3">Sign Into Your Account</h4>
                             <Form onSubmit={formik.handleSubmit}>
                                 {/* Email Field */}
-                                <Form.Group controlId="formEmail">
+                             <div className='text-left'>
+                             <Form.Group controlId="formEmail">
                                     <Form.Label>Email</Form.Label>
                                     <Form.Control
                                         type="email"
@@ -104,11 +109,13 @@ const LoginForm = () => {
                                         {formik.errors.email}
                                     </Form.Control.Feedback>
                                 </Form.Group>
+                             </div>
 
                                 <br />
 
                                 {/* Password Field */}
-                                <Form.Group controlId="formPassword">
+                        <div className='text-left'>
+                        <Form.Group controlId="formPassword">
                                     <Form.Label>Password</Form.Label>
                                     <Form.Control
                                         type="password"
@@ -123,13 +130,15 @@ const LoginForm = () => {
                                     </Form.Control.Feedback>
                                 </Form.Group>
 
-                                <Button variant="primary" type="submit" className="mt-4 w-100">
+
+                        </div>
+                                <Button variant="success" type="submit" className="mt-4 w-100">
                                     Login
                                 </Button>
                             </Form>
 
                             <div className="text-center mt-3">
-                                <small>Don't have an account? <a href="/register">Register here</a></small>
+                                <small>Don't have an account? <a href="/register" className='text-decoration-none text-success'>Register here</a></small>
                             </div>
                         </Card.Body>
                     </Card>

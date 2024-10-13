@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, Button, Form } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { Card, Button, Form, Row, Col } from 'react-bootstrap';
+import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
 import { toast, ToastContainer } from 'react-toastify';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import 'react-toastify/dist/ReactToastify.css'; 
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditLoanApplicationForm = ({ userToken }) => {
     const { loanId } = useParams();
+    const navigate = useNavigate();
     const [initialValues, setInitialValues] = useState({
         loan_amount: '',
         repayment_period: '',
@@ -22,15 +23,13 @@ const EditLoanApplicationForm = ({ userToken }) => {
                 const response = await axios.get(`http://127.0.0.1:8000/api/loans/${loanId}`, {
                     headers: { Authorization: `Bearer ${userToken}` }
                 });
-                //updating state of initial values
-                const loanData = response.data; 
-              //  console.log('Check here',loanData.loanAmount)
+                // Updating state of initial values
+                const loanData = response.data;
                 setInitialValues({
                     loan_amount: loanData.loanAmount,
                     repayment_period: loanData.repaymentPeriod,
                     loan_purpose: loanData.loanPurpose
                 });
-                console.log(initialValues,'initial')
                 console.log('Loan data fetched successfully:', loanData);
             } catch (error) {
                 console.error('Error fetching loan details:', error);
@@ -53,7 +52,11 @@ const EditLoanApplicationForm = ({ userToken }) => {
             const response = await axios.put(`http://127.0.0.1:8000/api/loans/${loanId}`, values, {
                 headers: { Authorization: `Bearer ${userToken}` }
             });
-            toast.success(response.data.error); // Assuming 'error' contains the success message
+            toast.success(response.data.error);
+
+            // Redirecting the customer to the  loan applications page after successful update
+            navigate('/customer/all-loan-applications');
+
         } catch (error) {
             console.error('Error updating loan:', error);
             toast.error('Failed to update loan application.');
@@ -62,7 +65,7 @@ const EditLoanApplicationForm = ({ userToken }) => {
     };
 
     return (
-        <div className="d-flex justify-content-center mt-5"> 
+        <div className="d-flex justify-content-center mt-5">
             <Card style={{ width: '500px' }}>
                 <Card.Header className="text-success text-left">
                     <h5>Loan Application No (LN.{loanId})</h5>
@@ -72,7 +75,7 @@ const EditLoanApplicationForm = ({ userToken }) => {
                         initialValues={initialValues}
                         validationSchema={validationSchema}
                         onSubmit={handleSubmit}
-                        enableReinitialize 
+                        enableReinitialize
                     >
                         {({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
                             <Form onSubmit={handleSubmit}>
@@ -143,7 +146,17 @@ const EditLoanApplicationForm = ({ userToken }) => {
                                     </Form.Group>
                                 </div>
 
-                                <Button variant="success" type="submit" className="w-100 mt-3">Update Loan</Button>
+                                <Row>
+                                    <Col>
+                                        <Button variant="success" type="submit" className="w-100 mt-3">Update Loan</Button>
+                                    </Col>
+                                    <Col>
+                                        <Button variant="secondary" className="w-100 mt-3" onClick={() => navigate('/customer/loan-applications')}>
+                                            Cancel
+                                        </Button>
+                                    </Col>
+
+                                </Row>
                             </Form>
                         )}
                     </Formik>

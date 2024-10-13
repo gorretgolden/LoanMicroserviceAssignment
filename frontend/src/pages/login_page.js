@@ -2,11 +2,11 @@ import React from 'react';
 import NavbarComponent from '../components/navbar_component';
 import LoginForm from '../components/login_form';
 
-function LoginPage(props) {
+function LoginPage() {
     return (
-        <div>
-          
-            {/* <NavbarComponent/> */}
+        <div className='mt-20'>
+           
+      
             <LoginForm/>
 
             

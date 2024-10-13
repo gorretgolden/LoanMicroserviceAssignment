@@ -1,11 +1,11 @@
 import React from 'react';
 import LoanApplicationForm from '../components/loan-application-form';
-import TestComponent from '../components/test';
+
 
 function LoanApplicationPage(props) {
     return (
-        <div>
-            {/* <TestComponent/> */}
+        <div className='mt-20'>
+          
             <LoanApplicationForm/>
             
         </div>
