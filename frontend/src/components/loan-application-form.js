@@ -76,7 +76,7 @@ const LoanApplicationForm = () => {
                     throw new Error(responseData.message || 'Network response was not ok');
                 }
 
-                // Check if the submission was successful
+                // Checking if the submission was successful
                 if (responseData.success) {
                     toast.success(responseData.message, {
                         position: "top-center",
@@ -90,7 +90,7 @@ const LoanApplicationForm = () => {
                     // Delay navigation to allow the toast to be shown
                     setTimeout(() => {
                         navigate('/loans/new-loan-application');
-                    }, 3000); // Delay for 3 seconds
+                    }, 3000); // Delaying the navigation for 3 seconds
                 } else {
                     throw new Error('Unexpected response structure');
                 }
@@ -99,13 +99,15 @@ const LoanApplicationForm = () => {
                 console.error('Error:', error);
 
                 // Show error toast message
-                toast.error(error.message || 'Loan application failed, try again later', {
-                    position: "top-right",
-                    autoClose: 5000,
+                toast.error(
+                    error.message || 'Loan application failed, try again later', {
+                    position: "top-center",
+                    autoClose: 8000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
+                    
                 });
             }
         },
@@ -127,33 +129,39 @@ const LoanApplicationForm = () => {
                     <Card style={{ width: '30rem' }} className="shadow">
                         <Card.Body>
                             <h5 className="text-center mt-3">Loan Application Form</h5>
-                            <hr/>
+                            <hr />
                             <Form onSubmit={formik.handleSubmit} className="mt-4" style={{ maxWidth: '500px', margin: '0 auto' }}>
-                                <Form.Group controlId="formLoanAmount">
-                                    <Form.Label>Loan Amount</Form.Label>
-                                    <Form.Control
-                                        type="number"
-                                        min='100000'
-                                        name="loan_amount"
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={formik.values.loan_amount}
-                                        isInvalid={formik.touched.loan_amount && formik.errors.loan_amount}
-                                        style={{ width: '100%', textAlign: 'left' }}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        {formik.errors.loan_amount}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
+                                <div className='text-left'>
+                                    <Form.Group controlId="formLoanAmount">
+                                        <Form.Label>Loan Amount</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            min='100000'
+                                            name="loan_amount"
+                                            onChange={formik.handleChange}
+                                            placeholder='Enter the loan amount'
+                                            onBlur={formik.handleBlur}
+                                            value={formik.values.loan_amount}
+                                            isInvalid={formik.touched.loan_amount && formik.errors.loan_amount}
+                                            style={{ width: '100%' }}
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            {formik.errors.loan_amount}
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
+
+                                </div>
                                 <br />
 
-                                <Form.Group controlId="formRepaymentPeriod">
+                        <div className='text-left'>
+                        <Form.Group controlId="formRepaymentPeriod">
                                     <Form.Label>Repayment Period (in months)</Form.Label>
                                     <Form.Control
                                         type="number"
                                         min="1"
                                         max='20'
                                         name="repayment_period"
+                                        placeholder='Enter the repayment period'
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                         value={formik.values.repayment_period}
@@ -164,9 +172,12 @@ const LoanApplicationForm = () => {
                                         {formik.errors.repayment_period}
                                     </Form.Control.Feedback>
                                 </Form.Group>
+
+                        </div>
                                 <br />
 
-                                <Form.Group controlId="formLoanPurpose">
+                         <div className='text-left'>
+                         <Form.Group controlId="formLoanPurpose">
                                     <Form.Label>Loan Purpose</Form.Label>
                                     <Form.Select
                                         name="loan_purpose"
@@ -198,6 +209,8 @@ const LoanApplicationForm = () => {
                                         {formik.errors.loan_purpose}
                                     </Form.Control.Feedback>
                                 </Form.Group>
+
+                         </div>
 
                                 <Row className='mt-3 mb-3'>
                                     <Col>

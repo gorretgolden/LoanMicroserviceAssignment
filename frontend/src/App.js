@@ -20,7 +20,7 @@ function App() {
           <Route path="/register" element={<RegisterPage/>} />
           <Route path="/login" element={<LoginPage/>} />
           <Route path="/loans/new-loan-application" element={<LoanApplicationPage/>} />
-          <Route path="customer/loan-applications" element={<AllUserLoans/>} />
+          <Route path="/customer/all-loan-applications" element={<AllUserLoans/>} />
           <Route path="/edit-loan-application/:loanId" element={<EditLoanApplicationPage userToken={userToken} />} />
 
     

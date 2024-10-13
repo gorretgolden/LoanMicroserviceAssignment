@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import LoanTable from '../components/loan_table';
 import { Card, Badge, Row, Col, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaEdit } from 'react-icons/fa';
-import { DEFAULT_CUSTOMER_URL } from '../constants/constants';
-
+import customerAvatar from '../assets/images/customer-avatar.png'
 
 
 
 const CustomerLoansPage = () => {
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     const customerId = localStorage.getItem('userId');
     const userToken = localStorage.getItem('userToken');
     const [lastLoan, setLastLoan] = useState(null);
@@ -25,7 +24,7 @@ const CustomerLoansPage = () => {
     const formatDate = (dateString) => {
         const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
         const date = new Date(dateString);
-        return date.toLocaleDateString('en-GB', options); 
+        return date.toLocaleDateString('en-GB', options);
     };
 
     useEffect(() => {
@@ -49,26 +48,28 @@ const CustomerLoansPage = () => {
     // Function to handle edit button click
     const handleEditLoan = () => {
         if (lastLoan) {
-            navigate(`/edit-loan/${lastLoan.id}`); 
+            navigate(`/edit-loan/${lastLoan.id}`);
         }
     };
 
     return (
-        <div className='py-20 px-8' style={{ backgroundColor: '#F5F5F5' }}>
+        <div className='py-20 px-8'>
             <Row className="mb-4">
+                <Col>
+                </Col>
                 <Col xs={12} md={3}>
-                    <Card className="mb-4 last-loan-card w-300 shadow">
-                        <Card.Header className="last-loan-card-header"> <h5>Active Loan Application</h5></Card.Header>
+                    <Card className="mb-3 shadow-sm " style={{ backgroundColor: '#E5F7E2FF' }}>
+                        <Card.Header className="last-loan-card-header "> <h5>Active Loan Application</h5></Card.Header>
                         <Card.Body>
                             <Row>
                                 <Col ms={12}>
                                     {/* Customer image */}
                                     <div className=" mb-3 d-flex justify-content-center">
                                         <img
-                                            src={DEFAULT_CUSTOMER_URL}
+                                            src={customerAvatar}
                                             alt="User Avatar"
                                             className="rounded-circle"
-                                            style={{ width: '60px', height: '60px' }} 
+                                            style={{ width: '70px', height: '70px' }}
                                         />
                                     </div>
                                 </Col>
@@ -80,10 +81,10 @@ const CustomerLoansPage = () => {
                                     <div className="text-left">
                                         <strong>Name:</strong> {userDetails.name}<br />
                                     </div>
-                                    <div className=" mb-2 py-2">
+                                    <div className="py-2">
                                         <strong>Email:</strong> {userDetails.email}<br />
                                     </div>
-                                    <div className=" mb-2 py-2">
+                                    <div className=" py-2">
                                         <strong>Contact:</strong> {userDetails.contact}<br />
                                     </div>
                                 </div>
@@ -100,7 +101,10 @@ const CustomerLoansPage = () => {
                                         <Col>
                                             <div className="text-right">
                                                 <Button variant="link" >
-                                                    <FaEdit /> 
+                                                    <FaEdit className='text-warning' onClick={() => {
+                                                        navigate(`/edit-loan-application/${lastLoan.id}`);
+
+                                                    }} />
                                                 </Button>
                                             </div>
 
@@ -149,8 +153,10 @@ const CustomerLoansPage = () => {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col xs={12} md={9}>
-                    <h5 className="text-center">Loan Application History</h5>
+                <Col xs={12} md={8}>
+                 <Card>
+                    <Card.Header>   <h5 >Loan Application History</h5></Card.Header>
+                 </Card>
                     <div>
                         {customerId ? (
                             <LoanTable customerId={customerId} userToken={userToken} />

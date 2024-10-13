@@ -36,7 +36,7 @@ const NavbarComponent = () => {
             <Nav.Link as={Link} to="/" className="text-white px-4">About Us</Nav.Link>
             {isLoggedIn ? (
               <>
-                <Nav.Link as={Link} to="customer/loan-applications" className="text-white px-4">Loan Applications</Nav.Link>
+                <Nav.Link as={Link} to="/customer/all-loan-applications" className="text-white px-4">Loan Applications</Nav.Link>
                 <Button variant="light" onClick={handleLogout} className="ms-2 ml-4 text-success">Logout</Button>
               </>
             ) : (

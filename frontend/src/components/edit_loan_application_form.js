@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, Button, Form, Row, Col } from 'react-bootstrap';
-import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useParams, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -23,7 +23,6 @@ const EditLoanApplicationForm = ({ userToken }) => {
                 const response = await axios.get(`http://127.0.0.1:8000/api/loans/${loanId}`, {
                     headers: { Authorization: `Bearer ${userToken}` }
                 });
-                // Updating state of initial values
                 const loanData = response.data;
                 setInitialValues({
                     loan_amount: loanData.loanAmount,
@@ -52,21 +51,29 @@ const EditLoanApplicationForm = ({ userToken }) => {
             const response = await axios.put(`http://127.0.0.1:8000/api/loans/${loanId}`, values, {
                 headers: { Authorization: `Bearer ${userToken}` }
             });
-            toast.success(response.data.error);
-
-            // Redirecting the customer to the  loan applications page after successful update
-            navigate('/customer/all-loan-applications');
-
+            
+            // Display success message and delay navigation
+            toast.success(response.data.message || 'Loan updated successfully');
+            setTimeout(() => {
+                navigate('/customer/all-loan-applications');
+            }, 5000); // Adjust the delay as needed
+            
         } catch (error) {
             console.error('Error updating loan:', error);
-            toast.error('Failed to update loan application.');
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('Failed to update loan application.');
+            }
+        } finally {
+            setSubmitting(false);
         }
-        setSubmitting(false);
     };
+    
 
     return (
         <div className="d-flex justify-content-center mt-5">
-            <Card style={{ width: '500px' }}>
+            <Card style={{ width: '600px' }}>
                 <Card.Header className="text-success text-left">
                     <h5>Loan Application No (LN.{loanId})</h5>
                 </Card.Header>
@@ -79,7 +86,7 @@ const EditLoanApplicationForm = ({ userToken }) => {
                     >
                         {({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
                             <Form onSubmit={handleSubmit}>
-                                <div className='py-3'>
+                                <div className='py-3 text-left'>
                                     <Form.Group controlId="formLoanAmount">
                                         <Form.Label className='text-left'>Loan Amount</Form.Label>
                                         <Form.Control
@@ -96,7 +103,7 @@ const EditLoanApplicationForm = ({ userToken }) => {
                                     </Form.Group>
                                 </div>
 
-                                <div className='py-3'>
+                                <div className='py-3 text-left'>
                                     <Form.Group controlId="formRepaymentPeriod">
                                         <Form.Label>Repayment Period (months)</Form.Label>
                                         <Form.Control
@@ -113,7 +120,7 @@ const EditLoanApplicationForm = ({ userToken }) => {
                                     </Form.Group>
                                 </div>
 
-                                <div className='py-3'>
+                                <div className='py-3 text-left'>
                                     <Form.Group controlId="formLoanPurpose">
                                         <Form.Label>Loan Purpose</Form.Label>
                                         <Form.Select

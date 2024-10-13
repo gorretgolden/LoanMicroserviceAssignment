@@ -32,7 +32,7 @@ const LoanTable = ({ customerId, userToken }) => {
     return (
         <div className="d-flex justify-content-center mt-8">
             {loans.length > 0 ? (
-                <Table striped bordered hover className="w-75 text-center">
+                <Table striped bordered hover className="w-76 text-center">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -59,11 +59,11 @@ const LoanTable = ({ customerId, userToken }) => {
                                 </Badge></td>
                                 
                                 <td>
-                                    <Button variant="link" onClick={() => editLoan(loan.id)}>
-                                        <FaEdit /> Edit
+                                    <Button variant="link" className='text-decoration-none' onClick={() => editLoan(loan.id)}>
+                                        <FaEdit className='text-warning' /> Edit
                                     </Button>
-                                    <Button variant="link" onClick={() => viewLoanStatus(loan.id)}>
-                                        <FaEye /> View Status
+                                    <Button variant="link" className='text-decoration-none text-success' onClick={() => viewLoanStatus(loan.id)}>
+                                   View Loan
                                     </Button>
                                 </td>
                             </tr>
@@ -87,7 +87,7 @@ const LoanTable = ({ customerId, userToken }) => {
       
         navigate(`/edit-loan-application/${loanId}`);
         console.log('Edit Loan ID:', loanId);
-        // Navigating to the edit page
+    
     }
 
     function viewLoanStatus(loanId) {
