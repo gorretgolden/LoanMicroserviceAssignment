@@ -19,6 +19,7 @@ function App() {
           <Route path="/login" element={<LoginPage/>} />
           <Route path="/loans/new-loan-application" element={<LoanApplicationPage/>} />
           <Route path="customer/loan-applications" element={<AllUserLoans/>} />
+          <Route path='customer/loans' element={<AllUserLoans/>}/>
 
     
         </Routes>
