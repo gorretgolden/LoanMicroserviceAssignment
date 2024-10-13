@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, Button, Form, Row, Col } from 'react-bootstrap';
+import { Card, Button, Form, Row, Col, Spinner } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import 'react-toastify/dist/ReactToastify.css';
 import { baseUri } from '../constants/constants';
-
 
 const EditLoanApplicationForm = ({ userToken }) => {
     const { loanId } = useParams();
@@ -17,6 +16,7 @@ const EditLoanApplicationForm = ({ userToken }) => {
         repayment_period: '',
         loan_purpose: ''
     });
+    const [loading, setLoading] = useState(false); // New loading state
 
     // Fetch loan details when the component mounts
     useEffect(() => {
@@ -49,18 +49,17 @@ const EditLoanApplicationForm = ({ userToken }) => {
     });
 
     const handleSubmit = async (values, { setSubmitting }) => {
-        const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-        axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
+        setLoading(true); // Set loading to true on form submission
         try {
             const response = await axios.put(`${baseUri}/loans/${loanId}`, values, {
                 headers: { Authorization: `Bearer ${userToken}` }
             });
             
-            // Display success message and delay navigation
+            // Displaying success message and delay navigation
             toast.success(response.data.message || 'Loan updated successfully');
             setTimeout(() => {
                 navigate('/customer/all-loan-applications');
-            }, 5000); // Adjust the delay as needed
+            }, 5000); 
             
         } catch (error) {
             console.error('Error updating loan:', error);
@@ -70,11 +69,11 @@ const EditLoanApplicationForm = ({ userToken }) => {
                 toast.error('Failed to update loan application.');
             }
         } finally {
+            setLoading(false); // Set loading to false after submitting
             setSubmitting(false);
         }
     };
     
-
     return (
         <div className="d-flex justify-content-center mt-5">
             <Card style={{ width: '600px' }}>
@@ -159,14 +158,15 @@ const EditLoanApplicationForm = ({ userToken }) => {
 
                                 <Row>
                                     <Col>
-                                        <Button variant="success" type="submit" className="w-100 mt-3">Update Loan</Button>
+                                        <Button variant="success" type="submit" className="w-100 mt-3" disabled={loading}>
+                                            {loading ? <Spinner animation="border" size="sm" /> : 'Update Loan'}
+                                        </Button>
                                     </Col>
                                     <Col>
                                         <Button variant="secondary" className="w-100 mt-3" onClick={() => navigate('/customer/all-loan-application')}>
                                             Cancel
                                         </Button>
                                     </Col>
-
                                 </Row>
                             </Form>
                         )}

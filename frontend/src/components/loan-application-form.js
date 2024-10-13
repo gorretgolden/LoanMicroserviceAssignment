@@ -91,10 +91,10 @@ const LoanApplicationForm = () => {
                     });
 
                     setTimeout(() => {
-                        navigate('/loans/new-loan-application');
+                        navigate('/customer/all-loan-applications');
                     }, 3000);
                 } else {
-                    throw new Error('Unexpected response structure');
+                    throw new Error('Unexpected response');
                 }
 
             } catch (error) {
