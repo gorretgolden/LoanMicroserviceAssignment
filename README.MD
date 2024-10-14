@@ -8,7 +8,7 @@ The backend is built using PHP Laravel and contains and admin dashboard built us
 The backend also contains an API to service the frontend requests
 The frontend is build using React
 
-# Project Setup (Withour using Docker)
+# Project Setup (Without using Docker)
 
 This README will guide you through setting up the Laravel backend and React frontend for your application.
 
