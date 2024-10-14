@@ -105,3 +105,8 @@ Before you begin, ensure you have the following installed on your machine:
 ![View Loan Applications](./images/view-loan-applications.png)
 ![Edit Loan Application](./images/edit-loan-application.png)
 ![Loan Applications Admin](./images/loan-applications-admin.png)
+![New Loan Application Customer](./images/new-loan-application.png)
+![Rejected Loan Application Customer](./images/rejected-loans.png)
+![Updated Loan Application Customer](./images/updated-loan-success.png)
+![Update Rejected Loan Application Customer](./images/edit-rejected-approved-loans.png)
+![Approved Loan Application Admin](./images/approved-loans-admin.png)
