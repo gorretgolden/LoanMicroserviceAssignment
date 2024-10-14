@@ -65,12 +65,13 @@ Before you begin, ensure you have the following installed on your machine:
    Copy the example environment file to create a new environment file
    cp .env.example .env
    Open the .env file in a text editor and update the database configuration with your PostgreSQL credentials:
-   DB_CONNECTION=pgsql
-   DB_HOST=127.0.0.1
-   DB_PORT=5432
-   DB_DATABASE=your_database_name
-   DB_USERNAME=your_username
-   DB_PASSWORD=your_password
+   - **DB_CONNECTION**: `pgsql`
+   - **DB_HOST**: `127.0.0.1`
+   - **DB_PORT**: `5432`
+   - **DB_DATABASE**: `your_database_name`
+   - **DB_USERNAME**: `your_username`
+   - **DB_PASSWORD**: `your_password`
+
 
 6. **Generate Application Key**: 
    php artisan key:generate
