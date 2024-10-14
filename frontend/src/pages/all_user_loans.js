@@ -44,7 +44,7 @@ const CustomerLoansPage = () => {
     // Function to handle edit button click
     const handleEditLoan = () => {
         if (lastLoan) {
-            navigate(`/edit-loan/${lastLoan.id}`);
+            navigate(`/edit-loan-application/${lastLoan.id}`);
         }
     };
 
