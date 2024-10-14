@@ -18,6 +18,7 @@ This README will guide you through setting up the Laravel backend and React fron
 2. [Cloning the Project](#cloning-the-project)
 3. [Backend Setup](#backend-setup)
 4. [Frontend Setup](#frontend-setup)
+5. [Project Images](#project-images)
 ---
 
 ## Requirements
@@ -96,3 +97,13 @@ Before you begin, ensure you have the following installed on your machine:
 4. **Start the React Development Server**:  
    npm start
    http://localhost:3000  
+
+
+
+## Project Images
+- `/images/loan-application-form.png` 
+- `./images/view-loan-applications.png` 
+- `./images/edit-loan-application.png` 
+- `./images/loan-applications-admin.png`
+
+
