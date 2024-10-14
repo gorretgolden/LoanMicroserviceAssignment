@@ -1,12 +1,19 @@
 # About Project
-This is a take home assignment on creating a loan application microservice that allows
-customers to apply for loans, view their loan status and also make updates on their
-loan application
+This is a take-home assignment on creating a loan application microservice that allows customers to:
 
-The project contains a backend and a frontend folder
-The backend is built using PHP Laravel and contains and an admin dashboard built using Laravel Infyom
-The backend also contains an API to service the frontend requests
-The frontend is build using React
+- Apply for loans
+- View their loan status
+- Make updates on their loan application
+
+The project structure includes:
+
+- **Backend**:
+  - Built using PHP Laravel
+  - Contains an admin dashboard built using Laravel Infyom
+  - Provides an API to service the frontend requests
+
+- **Frontend**:
+  - Built using React
 
 # Project Setup (Without using Docker)
 
