@@ -57,6 +57,39 @@ class LoanApplicationAPIControllerTest extends TestCase
         ]);
     }
 
+
+    /** @test */
+    public function it_can_retrieve_loan_application_details()
+    {
+        // Creating a user
+        $user = User::factory()->create();
+
+        // Authenticating with Sanctum
+        Sanctum::actingAs($user);
+
+        // Creating a loan application
+        $loanApplication = LoanApplication::factory()->create([
+            'customer_id' => (string) $user->id,
+            'loan_amount' => 500000,
+            'repayment_period' => 6,
+            'loan_purpose' => 'Personal use',
+        ]);
+
+        // Sending a GET request to retrieve the loan application
+        $response = $this->getJson('/api/loans/' . $loanApplication->id);
+
+        // Assert the response
+        $response->assertStatus(200)
+            ->assertJson([
+                'loanId' => (string) $loanApplication->id,
+                'loanAmount' => $loanApplication->loan_amount,
+                'repaymentPeriod' => $loanApplication->repayment_period,
+                'loanPurpose' => $loanApplication->loan_purpose,
+                'status' => $loanApplication->status,
+                // Other fields can be asserted as needed
+            ]);
+    }
+
     //test for string customerid
     /** @test */
     public function it_should_return_validation_error_for_invalid_customer_id()
