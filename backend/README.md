@@ -1,16 +1,5 @@
 <h1 align="center"><img src="https://assets.infyom.com/open-source/infyom-logo.png" alt="InfyOm"></h1>
 
-# Laravel Boilerplate for AdminLTE Theme
-
-Laravel Boilerplate with [AdminLTE](https://adminlte.io/) Theme with [InfyOm Laravel Generator](https://github.com/InfyOmLabs/laravel-generator).
-Following things are ready to be used directly with AdminLTE Theme.
-
-- Signup
-- Login
-- Forgot Password
-- Password Reset
-- Home Layout with Sidebar
-
 ## Documentation
 
 Read [Documentation](https://infyom.com/open-source/laravelgenerator/docs/8.0/boilerplates) for detailed installation steps and usage.
@@ -23,7 +12,7 @@ You can support us by either sponsoring us or buying one of our paid products. O
 
 ### Buy our Paid Products
 
-[![InfyGPT](https://assets.infyom.com/open-source/infygpt-inline.png)](https://bit.ly/infy-gpt)
+[![InfyLms](https://assets.infyom.com/open-source/new/infylms-banner.png)](https://1.envato.market/AoPX2a)
 
 You can also check out our other paid products on [CodeCanyon](https://1.envato.market/BXAnR1).
 

@@ -31,8 +31,6 @@ return [
 
         'api_controller'    => app_path('Http/Controllers/API/'),
 
-        'api_resource'      => app_path('Http/Resources/'),
-
         'repository_test'   => base_path('tests/Repositories/'),
 
         'api_test'          => base_path('tests/APIs/'),
@@ -73,8 +71,6 @@ return [
 
         'api_controller'    => 'App\Http\Controllers\API',
 
-        'api_resource'      => 'App\Http\Resources',
-
         'request'           => 'App\Http\Requests',
 
         'api_request'       => 'App\Http\Requests\API',
@@ -97,7 +93,7 @@ return [
     |
     */
 
-    'templates'         => 'adminlte-templates',
+    'templates'         => 'stisla-templates',
 
     /*
     |--------------------------------------------------------------------------
@@ -128,7 +124,7 @@ return [
 
     'options' => [
 
-        'softDelete' => true,
+        'softDelete' => false,
 
         'save_schema_file' => true,
 
@@ -137,8 +133,6 @@ return [
         'tables_searchable_default' => false,
 
         'repository_pattern' => true,
-
-        'resources' => false,
 
         'excluded_fields' => ['id'], // Array of columns that doesn't required while creating module
     ],

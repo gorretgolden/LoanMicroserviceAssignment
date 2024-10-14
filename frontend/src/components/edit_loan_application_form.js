@@ -163,7 +163,7 @@ const EditLoanApplicationForm = ({ userToken }) => {
                                         </Button>
                                     </Col>
                                     <Col>
-                                        <Button variant="secondary" className="w-100 mt-3" onClick={() => navigate('/customer/all-loan-application')}>
+                                        <Button variant="secondary" className="w-100 mt-3" onClick={() => navigate('/customer/all-loan-applications')}>
                                             Cancel
                                         </Button>
                                     </Col>
