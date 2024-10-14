@@ -39,6 +39,12 @@ class LoanApplicationAPIController extends AppBaseController
     {
 
         $customer = User::find($customerId);
+        // If the customer does not exist, we return an error response
+        if (!$customer) {
+            return response()->json([
+                'error' => 'Customer not found.'
+            ], 404);
+        }
         // dd($customer->id);
         $customerLoanApplications = LoanApplication::where('customer_id', $customer->id)
             ->orderBy('id', 'desc')
@@ -138,7 +144,7 @@ class LoanApplicationAPIController extends AppBaseController
                     'loanId' => (string) $new_loan_application->id,
                     'status' => $new_loan_application->status,
                     'message' => 'Dear ' . $customer->name . ' your Loan Application has been submitted successfully.'
-                ], 200);
+                ], 201);
 
             }
 
