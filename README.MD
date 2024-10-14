@@ -76,8 +76,9 @@ Before you begin, ensure you have the following installed on your machine:
 6. **Generate Application Key**: 
    php artisan key:generate
 
-7. **Run Migrations**: 
+7. **Run Migrations and Admin Seeding**: 
    php artisan migrate
+   php artisan db:seed
 
 8. **Install Node Packages**: 
    npm install 
