@@ -119,8 +119,8 @@ const CustomerLoansPage = () => {
                                         <strong>Loan Purpose:</strong> {lastLoan.loan_purpose}<br />
                                     </div>
                                     <div className='py-2'>
-                                        <strong>Status:</strong>
-                                        <Badge pill variant={
+                                        <strong>Status: </strong>
+                                        <Badge pill bg={
                                             lastLoan.status === 'APPROVED' ? 'success' :
                                                 lastLoan.status === 'REJECTED' ? 'danger' :
                                                     lastLoan.status === 'PENDING' ? 'primary' : ''
