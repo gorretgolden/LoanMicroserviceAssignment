@@ -101,9 +101,7 @@ Before you begin, ensure you have the following installed on your machine:
 
 
 ## Project Images
-- `/images/loan-application-form.png` 
-- `./images/view-loan-applications.png` 
-- `./images/edit-loan-application.png` 
-- `./images/loan-applications-admin.png`
-
-
+![Loan Application Form](./images/loan-application-form.png)
+![View Loan Applications](./images/view-loan-applications.png)
+![Edit Loan Application](./images/edit-loan-application.png)
+![Loan Applications Admin](./images/loan-applications-admin.png)
