@@ -39,18 +39,14 @@ const RegistrationForm = () => {
                 .required('Confirm password is required'),
         }),
         onSubmit: async (values) => {
-            setLoading(true); //Updating the loading state to true
-            let cookies = document.cookie.split("=");
-            let token = cookies[1];
-            console.log('heree', token);
+            setLoading(true); 
+
 
             try {
                 const response = await fetch(`${baseUri}/auth/register`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        "Access-Control-Allow-Credentials": "true",
-                        credentials: "include",
                  
                     },
                     body: JSON.stringify({
@@ -88,7 +84,7 @@ const RegistrationForm = () => {
                     setTimeout(() => navigate('/login'), 2000);
                 }
             } catch (error) {
-             
+             console.log(error)
                 toast.error('Registration failed', {
                     position: "top-right",
                     autoClose: 5000,
