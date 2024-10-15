@@ -56,7 +56,7 @@ class LoanApplication extends Model
         'customer_id' => 'required|string',
         'loan_amount' => 'required|integer|min:10000',
         'repayment_period' => 'required|min:1',
-        'loan_purpose' => 'required|string|min:10',
+        'loan_purpose' => 'required|string|min:5',
         'status' => 'nullable'
     ];
    // Accessor for formatted created_at

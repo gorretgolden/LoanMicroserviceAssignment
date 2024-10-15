@@ -100,11 +100,7 @@ class LoanApplicationAPIController extends AppBaseController
     {
         try {
             // dd('here');
-            $rules = [
-                'customer_id' => 'required|string'
-            ];
-            $request->validate($rules);
-
+           
             // Converting the customer Id from string to integer
             $customerId = (int) $request->customer_id;
 
@@ -230,7 +226,7 @@ class LoanApplicationAPIController extends AppBaseController
         $rules = [
             'loan_amount' => 'nullable|integer|min:10000',
             'repayment_period' => 'nullable|min:1|max:12',
-            'loan_purpose' => 'nullable|string|min:10',
+            'loan_purpose' => 'nullable|string|min:5',
         ];
         $request->validate($rules);
         //only updating pending loan applications
@@ -245,19 +241,12 @@ class LoanApplicationAPIController extends AppBaseController
             $rules = [
                 'loan_amount' => 'nullable|integer|min:10000',
                 'repayment_period' => 'nullable|integer|min:1|max:12',
-                'loan_purpose' => 'nullable|string|min:10',
+                'loan_purpose' => 'nullable|string|min:5',
             ];
 
             // Create a validator instance
             $request->validate($rules);
 
-            // Check if the validation fails
-            // if ($validator->fails()) {
-            //     return response()->json([
-            //         'success' => false,
-            //         'errors' => $validator->errors(),
-            //     ], 422);
-            // }
 
             //Gteiing the loan application by id
             $loanApplication = LoanApplication::findOrFail($id);

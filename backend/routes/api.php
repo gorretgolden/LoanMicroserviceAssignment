@@ -29,7 +29,7 @@ Route::prefix('auth')->group(function () {
 
 });
 
-//loana pplication routes
+//loan application routes
 Route::prefix('loans')->middleware('auth:sanctum')->group(function () {
     Route::post('apply', [App\Http\Controllers\API\LoanApplicationAPIController::class, 'apply']);
     Route::get('{loanId}', [App\Http\Controllers\API\LoanApplicationAPIController::class, 'showLoanStatus']);
