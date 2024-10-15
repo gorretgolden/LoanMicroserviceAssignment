@@ -53,5 +53,6 @@ class User extends Authenticatable
         'gender' => 'required|string',
         'password' => 'required|string'
     ];
+    
 
 }

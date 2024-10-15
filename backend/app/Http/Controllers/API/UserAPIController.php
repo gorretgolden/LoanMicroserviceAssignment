@@ -55,8 +55,8 @@ class UserAPIController extends Controller
             $user->email = $request->email;
             $user->contact = $request->contact;
             $user->gender = $request->gender;
+            $user->user_type = 'customer';
             $password = $request->password;
-
             $user->password = Hash::make($password);
 
             $user->save();
