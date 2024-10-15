@@ -29,7 +29,8 @@ const RegistrationForm = () => {
             email: Yup.string().email('Invalid email address').required('Email is required'),
             contact: Yup.string()
                 .required('Contact number is required')
-                .matches(/^[0-9]+$/, 'Contact number must be digits only'),
+                .matches(/^[0-9]+$/, 'Contact number must be digits only')
+                .length(10, 'Contact number must be exactly 10 digits'),
             gender: Yup.string().required('Gender is required'),
             password: Yup.string()
                 .required('Password is required')

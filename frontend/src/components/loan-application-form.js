@@ -17,7 +17,9 @@ const validationSchema = Yup.object({
     loan_amount: Yup.number()
         .required('Loan Amount is required')
         .positive('Loan Amount must be a positive number')
-        .integer('Loan Amount must be an integer'),
+        .integer('Loan Amount must be an integer')
+        .min(100000, 'Minimum loan amount is UGX 100,000')
+        .max(8000000, 'Maximum loan amount is UGX 8,000,000'),
     repayment_period: Yup.number()
         .required('Repayment Period is required')
         .positive('Repayment Period must be a positive number')
