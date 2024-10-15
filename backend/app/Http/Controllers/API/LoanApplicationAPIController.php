@@ -95,7 +95,7 @@ class LoanApplicationAPIController extends AppBaseController
      *
      * @return Response
      */
-    //function to create a newn loan application
+    //function to create a new loan application
     public function apply(CreateLoanApplicationAPIRequest $request)
     {
         try {
