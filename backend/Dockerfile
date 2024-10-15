@@ -1,6 +1,7 @@
 #PHP version
 FROM php:8.2-fpm
 
+
 # Set the working directory
 WORKDIR /var/www
 

@@ -46,24 +46,24 @@ Before you begin, ensure you have the following installed on your machine:
 
 1. **Clone the Repository**:
    Use the following command to clone the project repository:
-   git clone https://github.com/gorretgolden/LoanMicroserviceAssignment
+   `git clone https://github.com/gorretgolden/LoanMicroserviceAssignment`
 
 
 2. **Change Directory**:  
-   cd LoanMicroserviceAssignment
+   `cd LoanMicroserviceAssignment`
 
 3. **Change Directory**:  
    Navigate to the Backend Directory
-   cd backend
+   `cd backend`
 
 4. **Install PHP Dependencies**:  
    Install PHP Dependencies: Run the following command to install the Laravel dependencies via Composer
-   composer install 
-   or composer update then composer install
+   `composer install` 
+   or `composer update` then `composer install`
 
 5. **Environment Configuration**:  
    Copy the example environment file to create a new environment file
-   cp .env.example .env
+   `cp .env.example .env`
    Open the .env file in a text editor and update the database configuration with your PostgreSQL credentials:
    - **DB_CONNECTION**: `pgsql`
    - **DB_HOST**: `127.0.0.1`
@@ -74,38 +74,38 @@ Before you begin, ensure you have the following installed on your machine:
 
 
 6. **Generate Application Key**: 
-   php artisan key:generate
+   `php artisan key:generate`
 
 7. **Run Migrations and Admin Seeding**: 
-   php artisan migrate
-   php artisan db:seed
+  ` php artisan migrate`
+   `php artisan db:seed`
 
 8. **Install Node Packages**: 
-   npm install 
+   `npm install`
 
 9. **Compile assets**: 
-   npm run dev
+   `npm run dev`
   
 10. **Start the devlopment server**: 
-   php artisan serve
-   http://localhost:8000
-   
+   `php artisan serve`
+   `http://localhost:8000`
+   `http://localhost:8000/admin`
 
 ## Frontend Setup
 
 1. **Change Directory (frontend)**:  
    Navigate to the Frontend Directory
-   cd ../frontend
+  `cd ../frontend`
 
 2. **Install Node.js Dependencies**:  
-   npm install
+   `npm install`
 
 3. **Change directory to src**:  
-   cd src
+   `cd src`
  
 4. **Start the React Development Server**:  
-   npm start
-   http://localhost:3000  
+   `npm start`
+   `http://localhost:3000`
 
 
 

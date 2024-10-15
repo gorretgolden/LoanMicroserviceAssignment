@@ -1,6 +1,5 @@
-version: '3'
 services:
-    laravel.test:
+    loanapplicationmicroservice:
         build:
             context: ./vendor/laravel/sail/runtimes/8.0
             dockerfile: Dockerfile
@@ -25,13 +24,8 @@ services:
         depends_on:
             - postgres  # Updated from mysql to postgres
             - redis
-            # - selenium
-    # selenium:
-    #     image: 'selenium/standalone-chrome'
-    #     volumes:
-    #         - '/dev/shm:/dev/shm'
-    #     networks:
-    #         - sail
+
+
     postgres:
         image: 'postgres:13'  # PostgreSQL image
         ports:
@@ -44,6 +38,17 @@ services:
             - sailpostgres:/var/lib/postgresql/data  # Volume for PostgreSQL
         networks:
             - sail
+
+    pgadmin:
+        image: 'dpage/pgadmin4:latest'  # pgAdmin image
+        ports:
+            - '5050:80'  # Expose pgAdmin on port 5050
+        environment:
+            PGADMIN_DEFAULT_EMAIL: 'admin@loanapplications.com'  # Default admin email
+            PGADMIN_DEFAULT_PASSWORD: 'admin'  # Default admin password
+        networks:
+            - sail
+
     redis:
         image: 'redis:alpine'
         ports:
@@ -52,12 +57,7 @@ services:
             - 'sailredis:/data'
         networks:
             - sail
-    # memcached:
-    #     image: 'memcached:alpine'
-    #     ports:
-    #         - '11211:11211'
-    #     networks:
-    #         - sail
+
     mailhog:
         image: 'mailhog/mailhog:latest'
         ports:
@@ -65,13 +65,14 @@ services:
             - 8025:8025
         networks:
             - sail
+
     npm:
         build:
-            context: .  # Use the current context
-            dockerfile: Dockerfile-node  # Use a separate Dockerfile for Node.js
+            context: .
+            dockerfile: Dockerfile-node
         container_name: npm_app
         depends_on:
-            - laravel.test
+            - loanapplicationmicroservice
         volumes:
             - '.:/var/www/html'
         command: >
@@ -80,12 +81,13 @@ services:
         networks:
             - sail
 
+
 networks:
     sail:
         driver: bridge
 
 volumes:
     sailpostgres:
-        driver: local  # Volume for PostgreSQL
+        driver: local
     sailredis:
         driver: local
